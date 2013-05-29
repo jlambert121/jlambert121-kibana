@@ -20,6 +20,10 @@
 # [*modules*]
 #   Array of Strings.  Modules that kibana should load
 #
+# [*logstash*]
+#   Boolean.  Enable logstash json logging
+#   Default: false
+#
 #
 # === Examples
 #
@@ -43,6 +47,7 @@ class kibana (
   $modules  = ['histogram','map','pie','table','stringquery','sort',
                'timepicker','text','fields','hits','dashcontrol',
                'column','derivequeries','trends'],
+  $logstash = false,
 ) {
 
   class { 'kibana::package':
@@ -50,9 +55,10 @@ class kibana (
   }
 
   class { 'kibana::config':
-    es_host => $es_host,
-    es_port => $es_port,
-    modules => $modules,
+    es_host   => $es_host,
+    es_port   => $es_port,
+    modules   => $modules,
+    logstash  => $logstash
   }
 
   anchor { 'kibana::begin': }
