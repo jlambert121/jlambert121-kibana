@@ -5,9 +5,10 @@ describe 'kibana::config', :type => :class do
 
   context 'default config' do
     let(:params) { {
-      :es_host => '',
-      :es_port => '9200',
-      :modules => ['histogram','map']
+      :es_host  => '',
+      :es_port  => '9200',
+      :modules  => ['histogram','map'],
+      :logstash => false,
     } }
 
     it { should contain_file('/var/www/html/kibana/config.js').with_content(/^\s+elasticsearch:\s+'http:\/\/'\+window.location.hostname\+':9200',$/) }
@@ -18,13 +19,13 @@ describe 'kibana::config', :type => :class do
 
   context 'set es host and port' do
     let(:params) { {
-      :es_host => 'elasticsearch',
-      :es_port => '9300',
-      :modules => ['histogram','map']
+      :es_host  => 'elasticsearch',
+      :es_port  => '9300',
+      :modules  => ['histogram','map'],
+      :logstash => false,
     } }
 
     it { should contain_file('/var/www/html/kibana/config.js').with_content(/^\s+elasticsearch:\s+'http:\/\/elasticsearch:9300',$/) }
-
   end
 
 end
