@@ -16,6 +16,7 @@ class kibana::config (
   $es_host,
   $es_port,
   $modules,
+  $logstash,
 ) {
 
   $es_real = $es_host ? {
@@ -35,6 +36,7 @@ class kibana::config (
     serverName  => $::fqdn,
     serverAlias => ['kibana.ineu.us'],
     docroot     => '/var/www/html/kibana',
+    logstash    => $logstash,
   }
 
 }
