@@ -44,9 +44,9 @@ class kibana (
   $ensure   = 'latest',
   $es_host  = '',
   $es_port  = 9200,
-  $modules  = ['histogram','map','pie','table','stringquery','sort',
-               'timepicker','text','fields','hits','dashcontrol',
-               'column','derivequeries','trends'],
+  $modules  = [ 'histogram','map','pie','table','stringquery','sort',
+                'timepicker','text','fields','hits','dashcontrol',
+                'column','derivequeries','trends'],
   $logstash = false,
 ) {
 
