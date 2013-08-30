@@ -41,13 +41,14 @@
 # Copyright 2013 EvenUp.
 #
 class kibana (
-  $ensure   = 'latest',
-  $es_host  = '',
-  $es_port  = 9200,
-  $modules  = [ 'histogram','map','pie','table','stringquery','sort',
-                'timepicker','text','fields','hits','dashcontrol',
-                'column','derivequeries','trends'],
-  $logstash = false,
+  $ensure           = 'latest',
+  $es_host          = '',
+  $es_port          = 9200,
+  $modules          = [ 'histogram','map','table','filtering','timepicker',
+                        'text','fields','hits','dashcontrol','column',
+                        'derivequeries','trends','bettermap','query','terms' ],
+  $logstash_logging = false,
+  $default_board    = 'default.json',
 ) {
 
   class { 'kibana::package':
@@ -55,10 +56,11 @@ class kibana (
   }
 
   class { 'kibana::config':
-    es_host   => $es_host,
-    es_port   => $es_port,
-    modules   => $modules,
-    logstash  => $logstash
+    es_host           => $es_host,
+    es_port           => $es_port,
+    modules           => $modules,
+    logstash_logging  => $logstash_logging,
+    default_board     => $default_board,
   }
 
   anchor { 'kibana::begin': }
