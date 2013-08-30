@@ -25,12 +25,9 @@ Known Issues:
 -------------
 Only tested on CentOS 6
 
-TODO:
-____
-[ ] Manage dashboards
 
 License:
-_______
+--------
 
 Released under the Apache 2.0 licence
 
