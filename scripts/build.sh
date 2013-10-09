@@ -17,7 +17,7 @@ fpm -s dir \
     --license MIT \
     --category 'Applications/Internet' \
     -a 'noarch' \
-    --config-files config.js \
+    --config-files src/config.js \
     --description 'Kibana is a web interface for Logstash.' \
     --url 'http://kibana.org' \
     --vendor 'kibana.org' \
