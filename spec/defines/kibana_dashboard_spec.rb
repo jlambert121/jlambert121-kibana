@@ -6,7 +6,7 @@ describe 'kibana::dashboard', :type => :define do
     let(:title) { 'mydash.json' }
     let(:params) { { :source => 'puppet:///somewhere' } }
 
-    it { should contain_file('/var/www/html/kibana/dashboards/mydash.json') }
+    it { should contain_file('/var/www/html/kibana/app/dashboards/mydash.json') }
   end
 
   context 'invalid name' do

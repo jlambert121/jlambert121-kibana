@@ -21,9 +21,9 @@ describe 'kibana::config', :type => :class do
   context 'set default board' do
     let(:params) { { :default_board => 'logstash.json' } }
 
-    it { should contain_file('/var/www/html/kibana/dashboards/default.json').with(
+    it { should contain_file('/var/www/html/kibana/app/dashboards/default.json').with(
       :ensure => 'link',
-      :target => '/var/www/html/kibana/dashboards/logstash.json'
+      :target => '/var/www/html/kibana/app/dashboards/logstash.json'
     )}
   end
 
