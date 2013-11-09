@@ -1,5 +1,5 @@
 name 'evenup-kibana'
-version '0.2.0'
+version '1.0.0'
 author 'Justin Lambert <jlambert@letsevenup.com>'
 license 'Apache'
 summary 'Installs and configures Kibana3.'
