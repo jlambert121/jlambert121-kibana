@@ -1,7 +1,7 @@
 fixtures:
   repositories:
     apache: https://github.com/evenup/evenup-apache.git
-    concat: git://github.com/ripienaar/puppet-concat.git
+    concat: https://github.com/puppetlabs/puppetlabs-concat.git
     stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
   symlinks:
     kibana: "#{source_dir}"
