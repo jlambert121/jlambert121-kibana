@@ -1,18 +1,15 @@
 #!/bin/bash
 
-# Clean up old "latest" and download a new one
-rm -f kibana-latest.zip
-rm -rf kibana-latest
-curl -so kibana-latest.zip http://download.elasticsearch.org/kibana/kibana/kibana-latest.zip
-unzip kibana-latest.zip > /dev/null
+VERSION=3.1.0
+rm -f kibana-${VERSION}.zip
+rm -rf kibana-${VERSION}
+curl -so kibana-${VERSION}.zip https://download.elasticsearch.org/kibana/kibana/kibana-${VERSION}.zip
+unzip kibana-${VERSION}.zip > /dev/null
 
-BUILD=`date +%Y%m%d`
-
-# Make package
 fpm -s dir \
     -t rpm \
     -n kibana \
-    -v $BUILD \
+    -v $VERSION \
     --prefix '/var/www/html/kibana' \
     --iteration '1.el6' \
     --license MIT \
@@ -24,4 +21,4 @@ fpm -s dir \
     --vendor 'kibana.org' \
     --maintainer "Justin Lambert" \
     -x var/www/html/kibana/.git \
-    -C kibana-latest .
+    -C kibana-${VERSION} .
