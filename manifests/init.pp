@@ -56,11 +56,11 @@ class kibana (
   }
 
   class { 'kibana::config':
-    es_host           => $es_host,
-    es_port           => $es_port,
-    modules           => $modules,
-    logstash_logging  => $logstash_logging,
-    default_board     => $default_board,
+    es_host          => $es_host,
+    es_port          => $es_port,
+    modules          => $modules,
+    logstash_logging => $logstash_logging,
+    default_board    => $default_board,
   }
 
   anchor { 'kibana::begin': }

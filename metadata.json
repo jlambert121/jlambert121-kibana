@@ -1,0 +1,19 @@
+{
+  "name": "evenup-kibana",
+  "version": "1.1.0",
+  "author": "Justin Lambert <jlambert@letsevenup.com>",
+  "license": "Apache-2.0",
+  "summary": "Manages kibana",
+  "source": "https://github.com/evenup/evenup-kibana",
+  "project_page": "https://github.com/evenup/evenup-kibana",
+  "issues_url": "https://github.com/evenup/evenup-kibana/issues",
+  "tags": ["kibana", "elk"],
+  "operatingsystem_support": [
+    { "operatingsystem": "RedHat", "operatingsystemrelease": [ "6", "7" ] },
+    { "operatingsystem": "CentOS", "operatingsystemrelease": [ "6", "7" ] },
+    { "operatingsystem": "Ubuntu", "operatingsystemrelease": [ "10.04", "12.04", "14.04" ] }
+  ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">=3.2.0 <5.0.0" }
+  ]
+}
