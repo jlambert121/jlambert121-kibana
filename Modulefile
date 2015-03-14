@@ -1,8 +1,0 @@
-name 'evenup-kibana'
-version '1.1.0'
-author 'Justin Lambert <jlambert@letsevenup.com>'
-license 'Apache'
-summary 'Installs and configures Kibana3.'
-source 'https://github.com/evenup/evenup-kibana'
-description 'Installs and configures Kibana3 from packages.'
-dependency 'evenup/apache', '>= 2.1.0'

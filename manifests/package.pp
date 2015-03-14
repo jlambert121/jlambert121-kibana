@@ -17,7 +17,7 @@ class kibana::package (
 ) {
 
   package { 'kibana':
-    ensure  => $ensure,
+    ensure => $ensure,
   }
 
 }

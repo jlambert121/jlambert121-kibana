@@ -1,7 +1,13 @@
 require 'spec_helper'
 
 describe 'kibana::config', :type => :class do
-  let(:facts) { { :concat_basedir => '/var/lib/puppet/concat' } }
+  let(:facts) { {
+    :ipaddress => '10.0.0.1',
+    :osfamily => 'RedHat',
+    :concat_basedir => '/var/lib/puppet/concat',
+    :id => 0,
+    :path => '/tmp'
+  } }
 
   context 'default config' do
     it { should contain_file('/var/www/html/kibana/config.js').with_content(/^\s+elasticsearch:\s+'http:\/\/'\+window.location.hostname\+':9200',$/) }

@@ -44,9 +44,9 @@ class kibana::config (
 
   if $default_board != 'default.json' {
     file { '/var/www/html/kibana/app/dashboards/default.json':
-      ensure  => link,
-      target  => "/var/www/html/kibana/app/dashboards/${default_board}",
-      force   => true,
+      ensure => link,
+      target => "/var/www/html/kibana/app/dashboards/${default_board}",
+      force  => true,
     }
   }
 
