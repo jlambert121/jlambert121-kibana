@@ -1,7 +1,9 @@
 fixtures:
-  repositories:
-    wget: https://github.com/maestrodev/puppet-wget.git
-    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
+  forge_modules:
+    wget: 'maestrodev/wget'
+    stdlib: 
+      repo: "puppetlabs/stdlib"
+      ref: "3.2.0"
   symlinks:
     kibana: "#{source_dir}"
 

@@ -74,13 +74,18 @@ class kibana (
   $shard_timeout    = $::kibana::params::shard_timeout,
 ) inherits kibana::params {
 
-
+  if !is_integer($port) {
+    fail("Class['kibana']: port must be an integer.  Received: ${port}")
+  }
+  if !is_integer($request_timeout) or $request_timeout < 1 {
+    fail("Class['kibana']: request_timeout must be an integer greater than 0.  Received: ${$request_timeout}")
+  }
+  if !is_integer($shard_timeout) or $shard_timeout < 0 {
+    fail("Class['kibana']: shard_timeout must be an integer 0 or greater.  Received: ${$shard_timeout}")
+  }
   validate_absolute_path($install_path)
   validate_absolute_path($tmp_dir)
-  validate_integer($port)
   validate_bool($es_preserve_host)
-  validate_integer($request_timeout, '', 0)
-  validate_integer($shard_timeout)
 
   class { 'kibana::install': } ->
   class { 'kibana::config': } ~>
