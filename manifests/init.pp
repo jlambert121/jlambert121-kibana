@@ -1,28 +1,52 @@
 # == Class: kibana
 #
-# This class installs and configures kibana3 (http://three.kibana.org/)
+# This class installs and configures kibana3 (https://www.elastic.co/products/kibana)
 #
 #
 # === Parameters
 #
-# [*ensure*]
-#   String.  What version of kibana should be installed
-#   Default: latest
+# [*version*]
+#   String.  Version of kibana to install
 #
-# [*es_host*]
-#   String. Hostname to reach the elasticsearch server from.  This must be
-#     reachable from your browswer.
+# [*base_url*]
+#   String.  HTTP path to fetch kibana package from
+#   Default: https://download.elasticsearch.org/kibana/kibana
 #
-# [*es_port*]
-#   Integer.  Port to connect to the elasticsearch server on.
-#   Default: 9200
+# [*tmp_dir*]
+#   String.  Working dir for caching package
+#   Default: /tmp
 #
-# [*modules*]
-#   Array of Strings.  Modules that kibana should load
+# [*install_path*]
+#   String.  Location to install kibana
+#   Default: /opt
 #
-# [*logstash*]
-#   Boolean.  Enable logstash json logging
-#   Default: false
+# [*port*]
+#   Integer.  Port for kibana to listen on
+#   Default: 5601
+#
+# [*es_url*]
+#   String.  ElasticSearch path to connect to
+#   Default: http://localhost:9200
+#
+# [*es_preserve_host*]
+#   Boolean.
+#   Default: true
+#
+# [*kibana_index*]
+#   String.  Index to save searches, visualizations, and dashboards
+#   Default: .kibana
+#
+# [*default_app_id*]
+#   String.  The default application to load.
+#   Default: discover
+#
+# [*request_timeout*]
+#   Integer.  Time in milliseconds to wait for responses from the back end or elasticsearch.
+#   Default: 300000
+#
+# [*shard_timeout*]
+#   String.  Time in milliseconds for Elasticsearch to wait for responses from shards.
+#   Default: 0
 #
 #
 # === Examples
@@ -35,41 +59,33 @@
 #
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
-#
-# === Copyright
-#
-# Copyright 2013 EvenUp.
-#
 class kibana (
-  $ensure           = 'latest',
-  $es_host          = '',
-  $es_port          = 9200,
-  $modules          = [ 'histogram', 'map', 'goal', 'table', 'filtering', 'timepicker',
-                          'text', 'hits', 'column', 'trends', 'bettermap', 'query',
-                          'terms', 'stats', 'sparklines' ],
-  $logstash_logging = false,
-  $default_board    = 'default.json',
-) {
+  $version          = $::kibana::params::version,
+  $base_url         = $::kibana::params::base_url,
+  $install_path     = $::kibana::params::install_path,
+  $tmp_dir          = $::kibana::params::tmp_dir,
+  $port             = $::kibana::params::port,
+  $bind             = $::kibana::params::bind,
+  $es_url           = $::kibana::params::es_url,
+  $es_preserve_host = $::kibana::params::es_preserve_host,
+  $kibana_index     = $::kibana::params::kibana_index,
+  $default_app_id   = $::kibana::params::default_app_id,
+  $request_timeout  = $::kibana::params::request_timeout,
+  $shard_timeout    = $::kibana::params::shard_timeout,
+) inherits kibana::params {
 
-  class { 'kibana::package':
-    ensure  => $ensure,
-  }
 
-  class { 'kibana::config':
-    es_host          => $es_host,
-    es_port          => $es_port,
-    modules          => $modules,
-    logstash_logging => $logstash_logging,
-    default_board    => $default_board,
-  }
+  validate_absolute_path($install_path)
+  validate_absolute_path($tmp_dir)
+  validate_integer($port)
+  validate_bool($es_preserve_host)
+  validate_integer($request_timeout, '', 0)
+  validate_integer($shard_timeout)
 
-  anchor { 'kibana::begin': }
-  anchor { 'kibana::end': }
+  class { 'kibana::install': } ->
+  class { 'kibana::config': } ~>
+  class { 'kibana::service': }
 
-  Anchor['kibana::begin'] ->
-  Class['kibana::package'] ->
-  Class['kibana::config'] ->
-  Anchor['kibana::end']
-
+  Class['kibana::install'] ~> Class['kibana::service']
 
 }

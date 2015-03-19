@@ -1,4 +1,4 @@
-# == Class: kibana::configure
+# == Class: kibana::config
 #
 # This class configures kibana.  It should not be directly called.
 #
@@ -7,47 +7,24 @@
 #
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
-#
-# === Copyright
-#
-# Copyright 2013 EvenUp.
-#
 class kibana::config (
-  $es_host            = '',
-  $es_port            = 9200,
-  $modules            = [ 'histogram','map','table','filtering','timepicker',
-                        'text','fields','hits','dashcontrol','column',
-                        'derivequeries','trends','bettermap','query','terms' ],
-  $logstash_logging   = false,
-  $default_board      = 'default.json',
-) {
+  $install_path     = $::kibana::install_path,
+  $port             = $::kibana::port,
+  $bind             = $::kibana::bind,
+  $es_url           = $::kibana::es_url,
+  $es_preserve_host = $::kibana::es_preserve_host,
+  $kibana_index     = $::kibana::kibana_index,
+  $default_app_id   = $::kibana::default_app_id,
+  $request_timeout  = $::kibana::request_timeout,
+  $shard_timeout    = $::kibana::shard_timeout,
+){
 
-  $es_real = $es_host ? {
-    ''      => "http://'+window.location.hostname+':${es_port}",
-    default => "http://${es_host}:${es_port}"
-  }
-
-  file { '/var/www/html/kibana/config.js':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0444',
-    content => template('kibana/config.js'),
-  }
-
-  apache::vhost { 'kibana':
-    serverName  => $::fqdn,
-    serverAlias => ['kibana.ineu.us'],
-    docroot     => '/var/www/html/kibana',
-    logstash    => $logstash_logging,
-  }
-
-  if $default_board != 'default.json' {
-    file { '/var/www/html/kibana/app/dashboards/default.json':
-      ensure => link,
-      target => "/var/www/html/kibana/app/dashboards/${default_board}",
-      force  => true,
-    }
+  file { "${install_path}/kibana/config/kibana.yml":
+    ensure  => 'file',
+    owner   => 'kibana',
+    group   => 'kibana',
+    mode    => '0440',
+    content => template('kibana/kibana.yml.erb'),
   }
 
 }

@@ -1,7 +1,6 @@
 fixtures:
   repositories:
-    apache: https://github.com/evenup/evenup-apache.git
-    concat: https://github.com/puppetlabs/puppetlabs-concat.git
+    wget: https://github.com/maestrodev/puppet-wget.git
     stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
   symlinks:
     kibana: "#{source_dir}"

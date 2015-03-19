@@ -22,7 +22,11 @@ RSpec.configure do |c|
     hosts.each do |host|
       # Install module and dependencies
       copy_module_to(host, :source => proj_root, :module_name => 'kibana')
+      on host, puppet('module','install','maestrodev-wget'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
+      # Needed to set up ES so kibana will start
+      on host, puppet('module','install','elasticsearch-elasticsearch'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module','install','puppetlabs-java'), { :acceptable_exit_codes => [0,1] }
     end
   end
 end

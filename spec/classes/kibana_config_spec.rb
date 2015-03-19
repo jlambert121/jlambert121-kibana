@@ -2,35 +2,23 @@ require 'spec_helper'
 
 describe 'kibana::config', :type => :class do
   let(:facts) { {
-    :ipaddress => '10.0.0.1',
-    :osfamily => 'RedHat',
-    :concat_basedir => '/var/lib/puppet/concat',
-    :id => 0,
-    :path => '/tmp'
+    :kernel => 'Linux',
+    :http_proxy => false,
+    :https_proxy => false,
   } }
 
-  context 'default config' do
-    it { should contain_file('/var/www/html/kibana/config.js').with_content(/^\s+elasticsearch:\s+'http:\/\/'\+window.location.hostname\+':9200',$/) }
-    it { should contain_apache__vhost('kibana') }
-    it { should_not contain_file('/var/www/html/kibana/dashboards/default.json') }
-  end
+  let(:params) { {
+    :port             => 5601,
+    :bind             => '0.0.0.0',
+    :es_url           => 'http://localhost:9200',
+    :es_preserve_host => true,
+    :kibana_index     => '.kibana',
+    :default_app_id   => 'discover',
+    :request_timeout  => 30000,
+    :shard_timeout    => 0,
+    :install_path     => '/opt'
+  } }
 
-  context 'set es host and port' do
-    let(:params) { {
-      :es_host  => 'elasticsearch',
-      :es_port  => '9300',
-    } }
-
-    it { should contain_file('/var/www/html/kibana/config.js').with_content(/^\s+elasticsearch:\s+'http:\/\/elasticsearch:9300',$/) }
-  end
-
-  context 'set default board' do
-    let(:params) { { :default_board => 'logstash.json' } }
-
-    it { should contain_file('/var/www/html/kibana/app/dashboards/default.json').with(
-      :ensure => 'link',
-      :target => '/var/www/html/kibana/app/dashboards/logstash.json'
-    )}
-  end
+  it { should contain_file('/opt/kibana/config/kibana.yml') }
 
 end
