@@ -1,0 +1,12 @@
+[Unit]
+Description=Kibana service
+After=network.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/kibana
+Type=simple
+ExecStart=<%= @install_path %>/kibana/bin/kibana
+User=kibana
+
+[Install]
+WantedBy=multi-user.target
