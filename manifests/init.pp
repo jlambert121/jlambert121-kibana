@@ -87,9 +87,9 @@ class kibana (
   validate_absolute_path($tmp_dir)
   validate_bool($es_preserve_host)
 
-  class { 'kibana::install': } ->
-  class { 'kibana::config': } ~>
-  class { 'kibana::service': }
+  class { '::kibana::install': } ->
+  class { '::kibana::config': } ~>
+  class { '::kibana::service': }
 
   Class['kibana::install'] ~> Class['kibana::service']
 
