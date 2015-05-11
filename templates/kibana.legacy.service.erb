@@ -1,0 +1,130 @@
+#!/bin/sh
+#
+# kibana    Web interface to Logstash.
+#
+# chkconfig:   345 99 01
+# description: Kibana is a web interface to Logstash.
+
+### BEGIN INIT INFO
+# Provides: kibana
+# Required-Start: $all
+# Required-Stop: $all
+# Default-Start:
+# Default-Stop: 0 1 6
+# Short-Description: Kibana
+# Description: Kibana is a web interface to Logstash.
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+DESC="Kibana 4"
+NAME=kibana
+
+[ -e /etc/sysconfig/$NAME ] && . /etc/sysconfig/$NAME
+
+if [ "x$KIBANA_HOME" == "x" ]; then
+    KIBANA_HOME="/opt/kibana"
+fi
+
+DAEMON=$KIBANA_HOME/bin/$NAME
+PIDFILE=/var/run/$NAME.pid
+
+
+if [ "x$LOG" == "x" ]; then
+    LOG="/var/log/kibana/kibana.log"
+fi
+
+if [ "x$DAEMON_ARGS" == "x" ]; then
+    DAEMON_ARGS=""
+fi
+
+if [ "x$SCRIPTNAME" == "x" ]; then
+    SCRIPTNAME="/etc/init.d/$NAME"
+fi
+
+
+pid_file_exists() {
+    [ -f "$PIDFILE" ]
+}
+
+do_start()      {
+
+        if pid_file_exists
+        then
+            echo "Kibana is already running"
+        else
+            $DAEMON $DAEMON_ARGS 1>"$LOG" 2>&1 &
+            echo $! > "$PIDFILE"
+            PID=$!
+            if [ "$PID" > 0 ]
+            then
+                echo "Kibana started with pid $!"
+            else
+                echo "Kibana could not be started"
+            fi
+        fi
+}
+
+
+do_status() {
+        if pid_file_exists
+        then
+            PID=$(cat $PIDFILE)
+            STATUS=$(ps ax | grep $PID | grep -v grep | awk '{print $1}')
+
+            if [ "$STATUS" == "$PID" ]
+            then
+	            echo "Kibana is running on proccess $PID"
+            else
+                echo "Kibana is NOT running"
+                rm $PIDFILE
+            fi
+        else
+            echo "Kibana is NOT running"
+        fi
+}
+
+do_stop() {
+        if pid_file_exists
+        then
+            PID=$(cat $PIDFILE)
+            STATUS=$(ps ax | grep $PID | grep -v grep | awk '{print $1}')
+
+            if [ "$STATUS" == "$PID" ]
+            then
+                echo "Killing Kibana...."
+                KILL=$(kill -15 $PID)
+                rm $PIDFILE
+                sleep 1
+                echo -e "\tKibana (PID:$PID) killed"
+
+            else
+                echo "Kibana is NOT running"
+                rm $PIDFILE
+            fi
+        else
+                echo "Kibana is NOT running"
+        fi
+}
+
+
+case "$1" in
+  start)
+        do_start;;
+  stop)
+        do_stop
+        ;;
+  status)
+        do_status
+        ;;
+  restart)
+        do_stop
+        do_start
+        ;;
+  *)
+        echo "Usage: $SCRIPTNAME {start|stop|status|restart}" >&2
+        exit 3
+        ;;
+esac
+exit $?
