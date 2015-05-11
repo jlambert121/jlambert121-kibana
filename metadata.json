@@ -1,6 +1,6 @@
 {
   "name": "evenup-kibana",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "author": "Justin Lambert <jlambert@letsevenup.com>",
   "license": "Apache-2.0",
   "summary": "Manages kibana",
@@ -9,8 +9,8 @@
   "issues_url": "https://github.com/evenup/evenup-kibana/issues",
   "tags": ["kibana", "elk"],
   "operatingsystem_support": [
-    { "operatingsystem": "RedHat", "operatingsystemrelease": [ "7" ] },
-    { "operatingsystem": "CentOS", "operatingsystemrelease": [ "7" ] }
+    { "operatingsystem": "RedHat", "operatingsystemrelease": [ "6", "7" ] },
+    { "operatingsystem": "CentOS", "operatingsystemrelease": [ "6", "7" ] }
   ],
   "dependencies": [
     { "name": "maestrodev/wget", "version_requirements": ">=1.5.7 <2.0.0" },
