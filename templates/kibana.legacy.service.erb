@@ -24,7 +24,7 @@ NAME=kibana
 [ -e /etc/sysconfig/$NAME ] && . /etc/sysconfig/$NAME
 
 if [ "x$KIBANA_HOME" == "x" ]; then
-    KIBANA_HOME="/opt/kibana"
+    KIBANA_HOME="<%= @install_path %>/kibana"
 fi
 
 DAEMON=$KIBANA_HOME/bin/$NAME

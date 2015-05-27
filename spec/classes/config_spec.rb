@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'kibana::config', :type => :class do
+
   let(:facts) { {
     :kernel => 'Linux',
     :http_proxy => false,

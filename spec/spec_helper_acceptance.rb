@@ -27,6 +27,9 @@ RSpec.configure do |c|
       # Needed to set up ES so kibana will start
       on host, puppet('module','install','elasticsearch-elasticsearch'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-java'), { :acceptable_exit_codes => [0,1] }
+      if fact('osfamily') == 'Debian'
+        on host, puppet('module','install','puppetlabs-apt', '--version=1.8.0'), { :acceptable_exit_codes => [0,1] }
+      end
     end
   end
 end
