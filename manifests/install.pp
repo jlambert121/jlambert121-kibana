@@ -52,7 +52,7 @@ class kibana::install (
     file { '/etc/init.d/kibana':
       ensure  => 'file',
       content => template('kibana/kibana.legacy.service.erb'),
-      mode    => 0755,
+      mode    => '0755',
     }
   } else {
     file { '/usr/lib/systemd/system/kibana.service':
