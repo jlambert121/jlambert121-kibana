@@ -21,6 +21,42 @@ class kibana::params {
   $default_app_id      = 'discover'
   $request_timeout     = 300000
   $shard_timeout       = 0
-  $legacy_service_mode = false
 
+  case $::operatingsystem {
+    'RedHat', 'CentOS', 'Fedora', 'Scientific', 'Amazon', 'OracleLinux', 'SLC': {
+
+      if versioncmp($::operatingsystemmajrelease, '7') >= 0 {
+        $service_provider     = 'systemd'
+      } else {
+        $service_provider     = 'init'
+      }
+
+    }
+
+    'Debian': {
+
+      if versioncmp($::operatingsystemmajrelease, '8') >= 0 {
+        $service_provider = 'systemd'
+      } else {
+        $service_provider = 'init'
+      }
+    }
+
+    'Ubuntu': {
+
+      if versioncmp($::operatingsystemmajrelease, '15') >= 0 {
+        $service_provider = 'systemd'
+      } else {
+        $service_provider = 'init'
+      }
+    }
+
+    'OpenSuSE': {
+      $service_provider  = 'systemd'
+    }
+
+    default: {
+      $service_provider     = 'init'
+    }
+  }
 }

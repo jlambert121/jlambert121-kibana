@@ -12,10 +12,10 @@ class kibana::install (
   $base_url            = $::kibana::base_url,
   $tmp_dir             = $::kibana::tmp_dir,
   $install_path        = $::kibana::install_path,
-  $legacy_service_mode = $::kibana::legacy_service_mode,
 ) {
 
-  $filename = "kibana-${version}-linux-x64"
+  $filename         = "kibana-${version}-linux-x64"
+  $service_provider = $::kibana::params::service_provider
 
   group { 'kibana':
     ensure => 'present',
@@ -48,24 +48,34 @@ class kibana::install (
     require => Exec['extract_kibana'],
   }
 
-  if $legacy_service_mode {
-    file { '/etc/init.d/kibana':
-      ensure  => 'file',
-      content => template('kibana/kibana.legacy.service.erb'),
-      mode    => '0755',
-    }
-  } else {
-    file { '/usr/lib/systemd/system/kibana.service':
-      ensure  => 'file',
-      content => template('kibana/kibana.service.erb'),
-    }
-  }
-
   file { '/var/log/kibana':
     ensure  => directory,
     owner   => kibana,
     group   => kibana,
     require => User['kibana'],
+  }
+
+  if $service_provider == 'init' {
+
+    file { 'kibana-init-script':
+      path    => '/etc/init.d/kibana',
+      ensure  => 'file',
+      content => template('kibana/kibana.legacy.service.erb'),
+      mode    => '0755',
+      notify  => Class['service'],
+    }
+
+  }
+
+  if $service_provider == 'systemd' {
+
+    file { 'kibana-init-script':
+      path    => '/usr/lib/systemd/system/kibana.service',
+      ensure  => 'file',
+      content => template('kibana/kibana.service.erb'),
+      notify  => Class['service'],
+    }
+
   }
 
 }

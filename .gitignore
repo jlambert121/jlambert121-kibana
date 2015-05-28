@@ -9,3 +9,4 @@ spec/fixtures/
 coverage/
 .project
 .settings
+log/
