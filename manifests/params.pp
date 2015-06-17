@@ -38,7 +38,7 @@ class kibana::params {
       if versioncmp($::operatingsystemmajrelease, '8') >= 0 {
         $service_provider = 'systemd'
       } else {
-        $service_provider = 'init'
+        $service_provider = 'debianinit'
       }
     }
 
@@ -47,7 +47,7 @@ class kibana::params {
       if versioncmp($::operatingsystemmajrelease, '15') >= 0 {
         $service_provider = 'systemd'
       } else {
-        $service_provider = 'init'
+        $service_provider = 'debianinit'
       }
     }
 
