@@ -8,7 +8,8 @@ describe 'kibana::service', :type => :class do
     :osfamily => 'RedHat',
     :http_proxy => false,
     :https_proxy => false,
-    :operatingsystemmajrelease => '7'
+    :operatingsystemmajrelease => '7',
+    :architecture => 'amd64',
   } }
 
   context 'with defaults for all parameters' do

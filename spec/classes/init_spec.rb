@@ -9,6 +9,7 @@ describe 'kibana', :type => :class do
     :operatingsystemmajrelease => '7',
     :http_proxy => false,
     :https_proxy => false,
+    :architecture => 'amd64'
   } } 
 
   it { should contain_class('kibana::install') }
