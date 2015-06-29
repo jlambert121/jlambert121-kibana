@@ -62,7 +62,7 @@ class kibana::install (
       ensure  => 'file',
       content => template('kibana/kibana.legacy.service.erb'),
       mode    => '0755',
-      notify  => Class['service'],
+      notify  => Class['::kibana::service'],
     }
 
   }
@@ -73,7 +73,7 @@ class kibana::install (
       path    => '/usr/lib/systemd/system/kibana.service',
       ensure  => 'file',
       content => template('kibana/kibana.service.erb'),
-      notify  => Class['service'],
+      notify  => Class['::kibana::service'],
     }
 
   }
