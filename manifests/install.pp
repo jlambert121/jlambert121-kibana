@@ -63,7 +63,7 @@ class kibana::install (
     file { 'kibana-init-script':
       ensure  => file,
       path    => '/etc/init.d/kibana',
-      content => template('kibana/kibana.legacy.service.erb'),
+      content => template("kibana/${::kibana::params::init_script_template}"),
       mode    => '0755',
       notify  => Class['::kibana::service'],
     }

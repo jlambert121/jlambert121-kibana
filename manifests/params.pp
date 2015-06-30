@@ -29,6 +29,7 @@ class kibana::params {
         $service_provider     = 'systemd'
       } else {
         $service_provider     = 'init'
+        $init_script_template = 'kibana.legacy.service.erb'
       }
 
     }
@@ -39,6 +40,7 @@ class kibana::params {
         $service_provider = 'systemd'
       } else {
         $service_provider = 'init'
+        $init_script_template = 'kibana.legacy.debian.service.erb'
       }
     }
 
@@ -48,6 +50,7 @@ class kibana::params {
         $service_provider = 'systemd'
       } else {
         $service_provider = 'init'
+        $init_script_template = 'kibana.legacy.debian.service.erb'
       }
     }
 
@@ -57,6 +60,7 @@ class kibana::params {
 
     default: {
       $service_provider     = 'init'
+      $init_script_template = 'kibana.legacy.service.erb'
     }
   }
 }
