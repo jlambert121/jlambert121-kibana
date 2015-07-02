@@ -58,8 +58,8 @@ class kibana::install (
   if $service_provider == 'init' {
 
     file { 'kibana-init-script':
+      ensure  => file,
       path    => '/etc/init.d/kibana',
-      ensure  => 'file',
       content => template('kibana/kibana.legacy.service.erb'),
       mode    => '0755',
       notify  => Class['::kibana::service'],
@@ -70,8 +70,8 @@ class kibana::install (
   if $service_provider == 'systemd' {
 
     file { 'kibana-init-script':
+      ensure  => file,
       path    => '/usr/lib/systemd/system/kibana.service',
-      ensure  => 'file',
       content => template('kibana/kibana.service.erb'),
       notify  => Class['::kibana::service'],
     }
