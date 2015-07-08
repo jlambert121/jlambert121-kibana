@@ -139,4 +139,17 @@ describe 'kibana::install', :type => :class do
     it { should contain_file('kibana-init-script').with(:path => '/etc/init.d/kibana', :content => /\/lib\/lsb\/init-functions/) }
   end
 
+  context 'ensure init script is POSIX compatible' do
+    let (:facts) {
+      default_facts.merge({
+        :operatingsystem => 'Debian',
+      })
+    }
+
+    let (:pre_condition) { 'include kibana' }
+
+    it { should contain_file('kibana-init-script').without_content(/==/) }
+  end
+
 end
+

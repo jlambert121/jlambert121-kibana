@@ -1,6 +1,6 @@
 [ -e /etc/sysconfig/$NAME ] && . /etc/sysconfig/$NAME
 
-if [ "x$KIBANA_HOME" == "x" ]; then
+if [ "x$KIBANA_HOME" = "x" ]; then
     KIBANA_HOME="<%= @install_path %>/kibana"
 fi
 
@@ -8,15 +8,15 @@ DAEMON=$KIBANA_HOME/bin/$NAME
 PIDFILE=/var/run/$NAME.pid
 
 
-if [ "x$LOG" == "x" ]; then
+if [ "x$LOG" = "x" ]; then
     LOG="/var/log/kibana/kibana.log"
 fi
 
-if [ "x$DAEMON_ARGS" == "x" ]; then
+if [ "x$DAEMON_ARGS" = "x" ]; then
     DAEMON_ARGS=""
 fi
 
-if [ "x$SCRIPTNAME" == "x" ]; then
+if [ "x$SCRIPTNAME" = "x" ]; then
     SCRIPTNAME="/etc/init.d/$NAME"
 fi
 
@@ -50,7 +50,7 @@ do_status() {
             PID=$(cat $PIDFILE)
             STATUS=$(ps ax | grep $PID | grep -v grep | awk '{print $1}')
 
-            if [ "$STATUS" == "$PID" ]
+            if [ "$STATUS" = "$PID" ]
             then
 	            echo "Kibana is running on proccess $PID"
             else
@@ -68,7 +68,7 @@ do_stop() {
             PID=$(cat $PIDFILE)
             STATUS=$(ps ax | grep $PID | grep -v grep | awk '{print $1}')
 
-            if [ "$STATUS" == "$PID" ]
+            if [ "$STATUS" = "$PID" ]
             then
                 echo "Killing Kibana...."
                 KILL=$(kill -15 $PID)
