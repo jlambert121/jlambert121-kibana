@@ -70,6 +70,18 @@ class kibana::install (
 
   }
 
+  if $service_provider == 'debianinit' {
+
+    file { 'kibana-init-script':
+      path    => '/etc/init.d/kibana',
+      ensure  => 'file',
+      content => template('kibana/kibana.legacy.debian.ubuntu.service.erb'),
+      mode    => '0755',
+      notify  => Class['service'],
+    }
+
+  }
+
   if $service_provider == 'systemd' {
 
     file { 'kibana-init-script':
