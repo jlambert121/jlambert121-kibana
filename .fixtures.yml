@@ -3,7 +3,7 @@ fixtures:
     wget: 'maestrodev/wget'
     stdlib: 
       repo: "puppetlabs/stdlib"
-      ref: "3.2.0"
+      ref: "4.2.0"
   symlinks:
     kibana: "#{source_dir}"
 
