@@ -15,7 +15,7 @@ class kibana::install (
 ) {
 
   $filename = $::architecture ? {
-    'i386'           => "kibana-${version}-linux-x86",
+    /(i386|x86$)/    => "kibana-${version}-linux-x86",
     /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
   }
   $service_provider = $::kibana::params::service_provider
