@@ -1,0 +1,6 @@
+# Source function library.
+. /lib/lsb/init-functions
+
+# Source custom configuration - debian way!
+[ -e /etc/default/$NAME ] && . /etc/default/$NAME
+

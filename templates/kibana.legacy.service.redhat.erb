@@ -1,0 +1,6 @@
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source custom configuration - redhat way!
+[ -e /etc/sysconfig/$NAME ] && . /etc/sysconfig/$NAME
+

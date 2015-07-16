@@ -125,4 +125,31 @@ describe 'kibana::install', :type => :class do
     it { should contain_file('/opt/kibana').with(:target => '/opt/kibana-4.0.1-linux-x86') }
   end
 
+  context 'when running on Debian' do
+    let (:facts) {
+      default_facts.merge({
+        :osfamily => 'Debian',
+        :operatingsystem => 'Debian',
+        :operatingsystemmajrelease => '7',
+      })
+    }
+
+    let(:pre_condition) { 'include kibana' }
+
+    it { should contain_file('kibana-init-script').with(:path => '/etc/init.d/kibana', :content => /\/lib\/lsb\/init-functions/) }
+  end
+
+  context 'ensure init script is POSIX compatible' do
+    let (:facts) {
+      default_facts.merge({
+        :operatingsystem => 'Debian',
+      })
+    }
+
+    let (:pre_condition) { 'include kibana' }
+
+    it { should contain_file('kibana-init-script').without_content(/==/) }
+  end
+
 end
+
