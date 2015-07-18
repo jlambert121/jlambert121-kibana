@@ -50,14 +50,18 @@ do_status() {
 
             if [ "$STATUS" = "$PID" ]
             then
-	            echo "Kibana is running on proccess $PID"
+                echo "Kibana is running on proccess $PID"
+                result=0
             else
                 echo "Kibana is NOT running"
                 rm $PIDFILE
+                result=1
             fi
         else
             echo "Kibana is NOT running"
+            result=1
         fi
+        return $result
 }
 
 do_stop() {
