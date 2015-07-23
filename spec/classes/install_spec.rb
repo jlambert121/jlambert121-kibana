@@ -28,6 +28,7 @@ describe 'kibana::install', :type => :class do
       :destination => '/tmp/kibana-4.0.1-linux-x64.tar.gz'
       ) }
     it { should contain_exec('extract_kibana').with(:command => 'tar -xzf /tmp/kibana-4.0.1-linux-x64.tar.gz -C /opt' ) }
+    it { should contain_exec('ensure_correct_permissions').with(:command => 'chown -R kibana:kibana /opt/kibana-4.0.1-linux-x64', :require => "Exec[extract_kibana]") }
     it { should contain_file('/opt/kibana').with(:target => '/opt/kibana-4.0.1-linux-x64') }
     it { should contain_file('/var/log/kibana').with({
         'ensure'  => 'directory',
@@ -50,6 +51,27 @@ describe 'kibana::install', :type => :class do
     it { should contain_exec('extract_kibana').with(:command => 'tar -xzf /tmp/kibana-4.0.1-linux-x64.tar.gz -C /usr/local' ) }
     it { should contain_file('/usr/local/kibana').with(:target => '/usr/local/kibana-4.0.1-linux-x64') } 
 
+  end
+
+  context 'with a different user and group' do
+
+    let (:facts) {
+      default_facts.merge({
+        :operatingsystemmajrelease => '7'
+      })
+    }
+
+    let (:params) {
+      {
+        :group        => 'test_group',
+        :user         => 'test_user',
+        :install_path => '/opt',
+        :version      => '4.0.1'
+      }
+    }
+
+    it { should contain_user('test_user') }
+    it { should contain_exec('ensure_correct_permissions').with(:command => 'chown -R test_user:test_group /opt/kibana-4.0.1-linux-x64', :require => "Exec[extract_kibana]") }
   end
 
   context 'when running on EL 7' do

@@ -12,6 +12,8 @@ class kibana::install (
   $base_url            = $::kibana::base_url,
   $tmp_dir             = $::kibana::tmp_dir,
   $install_path        = $::kibana::install_path,
+  $group               = $::kibana::group,
+  $user                = $::kibana::user,
 ) {
 
   $filename         = $::architecture ? {
@@ -20,17 +22,17 @@ class kibana::install (
   }
   $service_provider = $::kibana::params::service_provider
 
-  group { 'kibana':
+  group { $group:
     ensure => 'present',
     system => true,
   }
 
-  user { 'kibana':
+  user { $user:
     ensure  => 'present',
     system  => true,
-    gid     => 'kibana',
+    gid     => $group,
     home    => $install_path,
-    require => Group['kibana'],
+    require => Group[$group],
   }
 
   wget::fetch { 'kibana':
@@ -43,6 +45,12 @@ class kibana::install (
     path    => ['/bin', '/sbin'],
     creates => "${install_path}/${filename}",
     require => Wget::Fetch['kibana'],
+  }
+
+  exec { 'ensure_correct_permissions':
+    command => "chown -R ${user}:${group} ${install_path}/${filename}",
+    path    => ['/bin', '/sbin'],
+    require => Exec['extract_kibana'],
   }
 
   file { "${install_path}/kibana":
