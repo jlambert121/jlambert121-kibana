@@ -8,7 +8,7 @@
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
 class kibana::params {
-  
+
   $version             = '4.0.1'
   $base_url            = 'https://download.elasticsearch.org/kibana/kibana'
   $install_path        = '/opt'
@@ -21,6 +21,8 @@ class kibana::params {
   $default_app_id      = 'discover'
   $request_timeout     = 300000
   $shard_timeout       = 0
+  $group               = 'kibana'
+  $user                = 'kibana'
 
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'Amazon', 'OracleLinux', 'SLC': {
