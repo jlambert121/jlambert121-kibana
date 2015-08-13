@@ -8,15 +8,17 @@
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
 class kibana::config (
-  $install_path     = $::kibana::install_path,
-  $port             = $::kibana::port,
-  $bind             = $::kibana::bind,
-  $es_url           = $::kibana::es_url,
-  $es_preserve_host = $::kibana::es_preserve_host,
-  $kibana_index     = $::kibana::kibana_index,
-  $default_app_id   = $::kibana::default_app_id,
-  $request_timeout  = $::kibana::request_timeout,
-  $shard_timeout    = $::kibana::shard_timeout,
+  $install_path                  = $::kibana::install_path,
+  $port                          = $::kibana::port,
+  $bind                          = $::kibana::bind,
+  $es_url                        = $::kibana::es_url,
+  $es_preserve_host              = $::kibana::es_preserve_host,
+  $kibana_index                  = $::kibana::kibana_index,
+  $kibana_elasticsearch_username = $::kibana_elasticsearch_username,
+  $kibana_elasticsearch_password = $::kibana_elasticsearch_password,
+  $default_app_id                = $::kibana::default_app_id,
+  $request_timeout               = $::kibana::request_timeout,
+  $shard_timeout                 = $::kibana::shard_timeout,
 ){
 
   file { "${install_path}/kibana/config/kibana.yml":

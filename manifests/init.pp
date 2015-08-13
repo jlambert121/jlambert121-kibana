@@ -40,6 +40,14 @@
 #   String.  The default application to load.
 #   Default: discover
 #
+# [*kibana_elasticsearch_username*}
+#   String. The Elasticsearch user
+#   Default: undef
+#
+# [*kibana_elasticsearch_password*]
+#   String. The Elasticsearch password
+#   Default: undef
+#
 # [*request_timeout*]
 #   Integer.  Time in milliseconds to wait for responses from the back end or elasticsearch.
 #   Default: 300000
@@ -63,18 +71,20 @@
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
 class kibana (
-  $version             = $::kibana::params::version,
-  $base_url            = $::kibana::params::base_url,
-  $install_path        = $::kibana::params::install_path,
-  $tmp_dir             = $::kibana::params::tmp_dir,
-  $port                = $::kibana::params::port,
-  $bind                = $::kibana::params::bind,
-  $es_url              = $::kibana::params::es_url,
-  $es_preserve_host    = $::kibana::params::es_preserve_host,
-  $kibana_index        = $::kibana::params::kibana_index,
-  $default_app_id      = $::kibana::params::default_app_id,
-  $request_timeout     = $::kibana::params::request_timeout,
-  $shard_timeout       = $::kibana::params::shard_timeout,
+  $version                       = $::kibana::params::version,
+  $base_url                      = $::kibana::params::base_url,
+  $install_path                  = $::kibana::params::install_path,
+  $tmp_dir                       = $::kibana::params::tmp_dir,
+  $port                          = $::kibana::params::port,
+  $bind                          = $::kibana::params::bind,
+  $es_url                        = $::kibana::params::es_url,
+  $es_preserve_host              = $::kibana::params::es_preserve_host,
+  $kibana_index                  = $::kibana::params::kibana_index,
+  $kibana_elasticsearch_username = $::kibana::params::kibana_elasticsearch_username,
+  $kibana_elasticsearch_password = $::kibana::params::kibana_elasticsearch_password,
+  $default_app_id                = $::kibana::params::default_app_id,
+  $request_timeout               = $::kibana::params::request_timeout,
+  $shard_timeout                 = $::kibana::params::shard_timeout,
 ) inherits kibana::params {
 
   if !is_integer($port) {
