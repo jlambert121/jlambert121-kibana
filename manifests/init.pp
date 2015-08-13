@@ -56,6 +56,10 @@
 #   Boolean.
 #   Default: false
 #
+# [*verify_ssl*]
+#   Boolean.
+#   Default: true
+#
 # === Examples
 #
 # * Installation:
@@ -79,6 +83,7 @@ class kibana (
   $default_app_id      = $::kibana::params::default_app_id,
   $request_timeout     = $::kibana::params::request_timeout,
   $shard_timeout       = $::kibana::params::shard_timeout,
+  $verify_ssl          = $::kibana::params::verify_ssl,
 ) inherits kibana::params {
 
   if !is_integer($port) {

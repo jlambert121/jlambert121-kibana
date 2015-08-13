@@ -22,6 +22,7 @@ class kibana::params {
   $request_timeout     = 300000
   $shard_timeout       = 0
   $group               = 'kibana'
+  $verify_ssl          = true
   $user                = 'kibana'
 
   case $::operatingsystem {
