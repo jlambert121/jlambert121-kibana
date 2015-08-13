@@ -26,6 +26,9 @@ kibana_index: "<%= @kibana_index %>"
 # The default application to load.
 default_app_id: "<%= @default_app_id %>"
 
+# Logs
+log_file: /var/log/kibana/kibana.log
+
 # Time in milliseconds to wait for responses from the back end or elasticsearch.
 # This must be > 0
 request_timeout: <%= @request_timeout %>
