@@ -24,6 +24,10 @@
 #   Integer.  Port for kibana to listen on
 #   Default: 5601
 #
+# [*bind*]
+#   String. IP Address for kibana to listen on
+#   Default: 0.0.0.0
+#
 # [*es_url*]
 #   String.  ElasticSearch path to connect to
 #   Default: http://localhost:9200
