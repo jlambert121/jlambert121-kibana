@@ -11,14 +11,19 @@ describe 'kibana::config', :type => :class do
   let(:params) { {
     :port                          => 5601,
     :bind                          => '0.0.0.0',
+    :ca_cert                       => nil,
     :es_url                        => 'http://localhost:9200',
     :es_preserve_host              => true,
     :kibana_index                  => '.kibana',
     :kibana_elasticsearch_username => nil,
     :kibana_elasticsearch_password => nil,
     :default_app_id                => 'discover',
+    :pid_file                      => '/var/run/kibana.pid',
     :request_timeout               => 30000,
     :shard_timeout                 => 0,
+    :ssl_cert_file                 => nil,
+    :ssl_key_file                  => nil,
+    :verify_ssl                    => true,
     :install_path                  => '/opt'
   } }
 

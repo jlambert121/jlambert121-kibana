@@ -11,6 +11,7 @@ class kibana::params {
 
   $version                       = '4.0.1'
   $base_url                      = 'https://download.elasticsearch.org/kibana/kibana'
+  $ca_cert                       = undef
   $install_path                  = '/opt'
   $tmp_dir                       = '/tmp'
   $port                          = 5601
@@ -21,8 +22,12 @@ class kibana::params {
   $kibana_elasticsearch_username = undef
   $kibana_elasticsearch_password = undef
   $default_app_id                = 'discover'
+  $pid_file                      = '/var/run/kibana.pid'
   $request_timeout               = 300000
   $shard_timeout                 = 0
+  $ssl_cert_file                 = undef
+  $ssl_key_file                  = undef
+  $verify_ssl                    = true
   $group                         = 'kibana'
   $user                          = 'kibana'
 
