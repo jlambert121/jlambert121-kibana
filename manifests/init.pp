@@ -12,6 +12,10 @@
 #   String.  HTTP path to fetch kibana package from
 #   Default: https://download.elasticsearch.org/kibana/kibana
 #
+# [*ca_cert*]
+#   String: Path to ca cert (PEM formatted)
+#   Default: undef
+#
 # [*tmp_dir*]
 #   String.  Working dir for caching package
 #   Default: /tmp
@@ -44,6 +48,18 @@
 #   String.  The default application to load.
 #   Default: discover
 #
+# [*kibana_elasticsearch_username*}
+#   String. The Elasticsearch user
+#   Default: undef
+#
+# [*kibana_elasticsearch_password*]
+#   String. The Elasticsearch password
+#   Default: undef
+#
+# [*pid_file*]
+#   String. Path to the pid file
+#   Defailt: /var/run/kibana.pid
+#
 # [*request_timeout*]
 #   Integer.  Time in milliseconds to wait for responses from the back end or elasticsearch.
 #   Default: 300000
@@ -56,6 +72,18 @@
 #   Boolean.
 #   Default: false
 #
+# [*ssl_cert_file*]
+#   String. Path to ssl key file (PEM formatted).
+#   Default: undef
+#
+# [*ssl_key_file*]
+#   String. Path to ssl cert file (PEM formatted).
+#   Default: undef
+#
+# [*verify_ssl*]
+#   Boolean. Validate the ssl certificate.
+#   Default: true
+#
 # === Examples
 #
 # * Installation:
@@ -67,18 +95,25 @@
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
 class kibana (
-  $version             = $::kibana::params::version,
-  $base_url            = $::kibana::params::base_url,
-  $install_path        = $::kibana::params::install_path,
-  $tmp_dir             = $::kibana::params::tmp_dir,
-  $port                = $::kibana::params::port,
-  $bind                = $::kibana::params::bind,
-  $es_url              = $::kibana::params::es_url,
-  $es_preserve_host    = $::kibana::params::es_preserve_host,
-  $kibana_index        = $::kibana::params::kibana_index,
-  $default_app_id      = $::kibana::params::default_app_id,
-  $request_timeout     = $::kibana::params::request_timeout,
-  $shard_timeout       = $::kibana::params::shard_timeout,
+  $version                       = $::kibana::params::version,
+  $base_url                      = $::kibana::params::base_url,
+  $ca_cert                       = $::kibana::params::ca_cert,
+  $install_path                  = $::kibana::params::install_path,
+  $tmp_dir                       = $::kibana::params::tmp_dir,
+  $port                          = $::kibana::params::port,
+  $bind                          = $::kibana::params::bind,
+  $es_url                        = $::kibana::params::es_url,
+  $es_preserve_host              = $::kibana::params::es_preserve_host,
+  $kibana_index                  = $::kibana::params::kibana_index,
+  $kibana_elasticsearch_username = $::kibana::params::kibana_elasticsearch_username,
+  $kibana_elasticsearch_password = $::kibana::params::kibana_elasticsearch_password,
+  $default_app_id                = $::kibana::params::default_app_id,
+  $pid_file                      = $::kibana::params::pid_file,
+  $request_timeout               = $::kibana::params::request_timeout,
+  $shard_timeout                 = $::kibana::params::shard_timeout,
+  $ssl_cert_file                 = $::kibana::params::ssl_cert_file,
+  $ssl_key_file                  = $::kibana::params::ssl_key_file,
+  $verify_ssl                    = $::kibana::params::verify_ssl,
 ) inherits kibana::params {
 
   if !is_integer($port) {
@@ -91,8 +126,10 @@ class kibana (
     fail("Class['kibana']: shard_timeout must be an integer 0 or greater.  Received: ${$shard_timeout}")
   }
   validate_absolute_path($install_path)
+  validate_absolute_path($pid_file)
   validate_absolute_path($tmp_dir)
   validate_bool($es_preserve_host)
+  validate_bool($verify_ssl)
 
   class { '::kibana::install': } ->
   class { '::kibana::config': } ~>
