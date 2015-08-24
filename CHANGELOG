@@ -1,3 +1,9 @@
+20150824 - v2.2.0
+  Puppet 4 fixes <philipwigg>
+  Ubuntu/Debian support <philipwigg>
+  Init fixes <toepi>
+  Custom user/group <Sean McKinley>
+  Add verify_ssl parameter <Bill Schwanitz>
 20150511 - v2.1.0
   Add support for RH-based sysV distros
 20150319 - v2.0.1
