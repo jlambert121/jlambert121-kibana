@@ -44,13 +44,15 @@ class kibana::install (
     command => "tar -xzf ${tmp_dir}/${filename}.tar.gz -C ${install_path}",
     path    => ['/bin', '/sbin'],
     creates => "${install_path}/${filename}",
+    notify  => Exec['ensure_correct_permissions'],
     require => Wget::Fetch['kibana'],
   }
 
   exec { 'ensure_correct_permissions':
-    command => "chown -R ${user}:${group} ${install_path}/${filename}",
-    path    => ['/bin', '/sbin'],
-    require => Exec['extract_kibana'],
+    command     => "chown -R ${user}:${group} ${install_path}/${filename}",
+    path        => ['/bin', '/sbin'],
+    refreshonly => true,
+    require     => Exec['extract_kibana'],
   }
 
   file { "${install_path}/kibana":
