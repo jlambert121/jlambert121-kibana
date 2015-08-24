@@ -1,6 +1,6 @@
 {
   "name": "evenup-kibana",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": "Justin Lambert <jlambert@letsevenup.com>",
   "license": "Apache-2.0",
   "summary": "Manages kibana",
