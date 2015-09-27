@@ -52,7 +52,10 @@ class kibana::install (
     command     => "chown -R ${user}:${group} ${install_path}/${filename}",
     path        => ['/bin', '/sbin'],
     refreshonly => true,
-    require     => Exec['extract_kibana'],
+    require     => [
+        Exec['extract_kibana'],
+        User[$user],
+    ],
   }
 
   file { "${install_path}/kibana":
