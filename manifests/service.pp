@@ -13,6 +13,6 @@ class kibana::service {
     ensure  => running,
     enable  => true,
     require => File['kibana-init-script'],
+    provider => $::kibana::params::service_provider,
   }
-
 }
