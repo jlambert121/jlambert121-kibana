@@ -31,7 +31,7 @@ class kibana::install (
     ensure  => 'present',
     system  => true,
     gid     => $group,
-    home    => $install_path,
+    home    => "${install_path}/kibana",
     require => Group[$group],
   }
 
