@@ -8,22 +8,27 @@
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
 class kibana::params {
-
-  $version             = '4.0.1'
-  $base_url            = 'https://download.elasticsearch.org/kibana/kibana'
-  $install_path        = '/opt'
-  $tmp_dir             = '/tmp'
-  $port                = 5601
-  $bind                = '0.0.0.0'
-  $es_url              = 'http://localhost:9200'
-  $es_preserve_host    = true
-  $kibana_index        = '.kibana'
-  $default_app_id      = 'discover'
-  $request_timeout     = 300000
-  $shard_timeout       = 0
-  $group               = 'kibana'
-  $verify_ssl          = true
-  $user                = 'kibana'
+  $version                = '4.0.1'
+  $base_url               = 'https://download.elasticsearch.org/kibana/kibana'
+  $ca_cert                = undef
+  $install_path           = '/opt'
+  $tmp_dir                = '/tmp'
+  $port                   = 5601
+  $bind                   = '0.0.0.0'
+  $es_url                 = 'http://localhost:9200'
+  $es_preserve_host       = true
+  $kibana_index           = '.kibana'
+  $elasticsearch_username = undef
+  $elasticsearch_password = undef
+  $default_app_id         = 'discover'
+  $pid_file               = '/var/run/kibana.pid'
+  $request_timeout        = 300000
+  $shard_timeout          = 0
+  $ssl_cert_file          = undef
+  $ssl_key_file           = undef
+  $verify_ssl             = true
+  $group                  = 'kibana'
+  $user                   = 'kibana'
 
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'Amazon', 'OracleLinux', 'SLC': {
