@@ -21,7 +21,6 @@ class kibana::params {
   $elasticsearch_username = undef
   $elasticsearch_password = undef
   $default_app_id         = 'discover'
-  $pid_file               = '/var/run/kibana.pid'
   $request_timeout        = 300000
   $shard_timeout          = 0
   $ssl_cert_file          = undef
@@ -35,8 +34,10 @@ class kibana::params {
 
       if versioncmp($::operatingsystemmajrelease, '7') >= 0 {
         $service_provider     = 'systemd'
+        $pid_file             = '/var/run/kibana/kibana.pid'
       } else {
-        $service_provider     = 'init'
+        $service_provider        = 'init'
+        $pid_file                = '/var/run/kibana.pid'
         $init_script_osdependend = 'kibana.legacy.service.redhat.erb'
       }
 
@@ -46,8 +47,10 @@ class kibana::params {
 
       if versioncmp($::operatingsystemmajrelease, '8') >= 0 {
         $service_provider = 'systemd'
+        $pid_file         = '/var/run/kibana/kibana.pid'
       } else {
-        $service_provider = 'init'
+        $service_provider        = 'init'
+        $pid_file                = '/var/run/kibana.pid'
         $init_script_osdependend = 'kibana.legacy.service.debian.erb'
       }
     }
@@ -56,18 +59,22 @@ class kibana::params {
 
       if versioncmp($::operatingsystemmajrelease, '15') >= 0 {
         $service_provider = 'systemd'
+        $pid_file         = '/var/run/kibana/kibana.pid'
       } else {
-        $service_provider = 'init'
+        $service_provider        = 'init'
+        $pid_file                = '/var/run/kibana.pid'
         $init_script_osdependend = 'kibana.legacy.service.debian.erb'
       }
     }
 
     'OpenSuSE': {
       $service_provider  = 'systemd'
+      $pid_file          = '/var/run/kibana/kibana.pid'
     }
 
     default: {
-      $service_provider     = 'init'
+      $service_provider        = 'init'
+      $pid_file                = '/var/run/kibana.pid'
       $init_script_osdependend = 'kibana.legacy.service.redhat.erb'
     }
   }

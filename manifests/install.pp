@@ -92,7 +92,14 @@ class kibana::install (
       content => template('kibana/kibana.service.erb'),
       notify  => Class['::kibana::service'],
     }
-
+    
+    file { 'kibana-run-dir':
+      ensure => directory,
+      path   => '/run/kibana',
+      owner  => $user,
+      group  => $group,
+      notify => Class['::kibana::service'],
+    }
   }
 
 }
