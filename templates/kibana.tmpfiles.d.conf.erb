@@ -1,2 +1,2 @@
 # kibana needs directory in /var/run
-d /var/run/kibana 0775 <%= @user -%> <%= @group %>
+d <%= @run_path -%> 0775 <%= @user -%> <%= @group %>

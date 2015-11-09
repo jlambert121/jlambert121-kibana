@@ -34,10 +34,10 @@ class kibana::params {
 
       if versioncmp($::operatingsystemmajrelease, '7') >= 0 {
         $service_provider     = 'systemd'
-        $pid_file             = '/var/run/kibana/kibana.pid'
+        $run_path             = '/run/kibana'
       } else {
         $service_provider        = 'init'
-        $pid_file                = '/var/run/kibana.pid'
+        $run_path                = '/var/run'
         $init_script_osdependend = 'kibana.legacy.service.redhat.erb'
       }
 
@@ -47,10 +47,10 @@ class kibana::params {
 
       if versioncmp($::operatingsystemmajrelease, '8') >= 0 {
         $service_provider = 'systemd'
-        $pid_file         = '/var/run/kibana/kibana.pid'
+        $run_path         = '/run/kibana'
       } else {
         $service_provider        = 'init'
-        $pid_file                = '/var/run/kibana.pid'
+        $run_path                = '/var/run'
         $init_script_osdependend = 'kibana.legacy.service.debian.erb'
       }
     }
@@ -59,23 +59,25 @@ class kibana::params {
 
       if versioncmp($::operatingsystemmajrelease, '15') >= 0 {
         $service_provider = 'systemd'
-        $pid_file         = '/var/run/kibana/kibana.pid'
+        $run_path         = '/run/kibana'
       } else {
         $service_provider        = 'init'
-        $pid_file                = '/var/run/kibana.pid'
+        $run_path                = '/var/run'
         $init_script_osdependend = 'kibana.legacy.service.debian.erb'
       }
     }
 
     'OpenSuSE': {
       $service_provider  = 'systemd'
-      $pid_file          = '/var/run/kibana/kibana.pid'
+      $run_path          = '/run/kibana'
     }
 
     default: {
       $service_provider        = 'init'
-      $pid_file                = '/var/run/kibana.pid'
+      $run_path                = '/var/run'
       $init_script_osdependend = 'kibana.legacy.service.redhat.erb'
     }
   }
+
+  $pid_file               = "${run_path}/kibana.pid"
 }
