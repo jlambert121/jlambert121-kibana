@@ -106,7 +106,7 @@ class kibana::install (
       path    => '/etc/tmpfiles.d/kibana.conf',
       owner   => root,
       group   => root,
-      content => template('kibana/kibana.tmpfiles.d.conf'),
+      content => template('kibana/kibana.tmpfiles.d.conf.erb'),
     }
   }
 
