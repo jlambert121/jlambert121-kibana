@@ -100,6 +100,14 @@ class kibana::install (
       group  => $group,
       notify => Class['::kibana::service'],
     }
+
+    file { 'kibana-tmpdir-d-conf':
+      ensure  => file,
+      path    => '/etc/tmpfiles.d/kibana.conf',
+      owner   => root,
+      group   => root,
+      content => template('kibana/kibana.tmpfiles.d.conf'),
+    }
   }
 
 }
