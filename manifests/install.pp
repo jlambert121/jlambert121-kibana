@@ -38,6 +38,7 @@ class kibana::install (
   wget::fetch { 'kibana':
     source      => "${base_url}/${filename}.tar.gz",
     destination => "${tmp_dir}/${filename}.tar.gz",
+    require     => User[$user],
   }
 
   exec { 'extract_kibana':
