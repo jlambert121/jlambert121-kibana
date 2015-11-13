@@ -20,7 +20,9 @@ class kibana::install (
     /(i386|x86$)/    => "kibana-${version}-linux-x86",
     /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
   }
+
   $service_provider = $::kibana::params::service_provider
+  $run_path         = $::kibana::params::run_path
 
   group { $group:
     ensure => 'present',
@@ -92,7 +94,22 @@ class kibana::install (
       content => template('kibana/kibana.service.erb'),
       notify  => Class['::kibana::service'],
     }
+    
+    file { 'kibana-run-dir':
+      ensure => directory,
+      path   => $run_path,
+      owner  => $user,
+      group  => $group,
+      notify => Class['::kibana::service'],
+    }
 
+    file { 'kibana-tmpdir-d-conf':
+      ensure  => file,
+      path    => '/etc/tmpfiles.d/kibana.conf',
+      owner   => root,
+      group   => root,
+      content => template('kibana/kibana.tmpfiles.d.conf.erb'),
+    }
   }
 
 }
