@@ -1,3 +1,7 @@
+20151129 - v2.3.0
+  Add shield parameters <Bill Schwanitz>
+  Enhanced dependencies <mikemead>
+  Service provider in params <Loic Blot>
 20150824 - v2.2.0
   Puppet 4 fixes <philipwigg>
   Ubuntu/Debian support <philipwigg>
