@@ -95,25 +95,26 @@
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
 class kibana (
-  $version                       = $::kibana::params::version,
-  $base_url                      = $::kibana::params::base_url,
-  $ca_cert                       = $::kibana::params::ca_cert,
-  $install_path                  = $::kibana::params::install_path,
-  $tmp_dir                       = $::kibana::params::tmp_dir,
-  $port                          = $::kibana::params::port,
-  $bind                          = $::kibana::params::bind,
-  $es_url                        = $::kibana::params::es_url,
-  $es_preserve_host              = $::kibana::params::es_preserve_host,
-  $kibana_index                  = $::kibana::params::kibana_index,
-  $elasticsearch_username        = $::kibana::params::elasticsearch_username,
-  $elasticsearch_password        = $::kibana::params::elasticsearch_password,
-  $default_app_id                = $::kibana::params::default_app_id,
-  $pid_file                      = $::kibana::params::pid_file,
-  $request_timeout               = $::kibana::params::request_timeout,
-  $shard_timeout                 = $::kibana::params::shard_timeout,
-  $ssl_cert_file                 = $::kibana::params::ssl_cert_file,
-  $ssl_key_file                  = $::kibana::params::ssl_key_file,
-  $verify_ssl                    = $::kibana::params::verify_ssl,
+  $version                = $::kibana::params::version,
+  $base_url               = $::kibana::params::base_url,
+  $ca_cert                = $::kibana::params::ca_cert,
+  $install_path           = $::kibana::params::install_path,
+  $tmp_dir                = $::kibana::params::tmp_dir,
+  $port                   = $::kibana::params::port,
+  $bind                   = $::kibana::params::bind,
+  $es_url                 = $::kibana::params::es_url,
+  $es_preserve_host       = $::kibana::params::es_preserve_host,
+  $kibana_index           = $::kibana::params::kibana_index,
+  $elasticsearch_username = $::kibana::params::elasticsearch_username,
+  $elasticsearch_password = $::kibana::params::elasticsearch_password,
+  $default_app_id         = $::kibana::params::default_app_id,
+  $pid_file               = $::kibana::params::pid_file,
+  $plugins                = $::kibana::params::plugins,
+  $request_timeout        = $::kibana::params::request_timeout,
+  $shard_timeout          = $::kibana::params::shard_timeout,
+  $ssl_cert_file          = $::kibana::params::ssl_cert_file,
+  $ssl_key_file           = $::kibana::params::ssl_key_file,
+  $verify_ssl             = $::kibana::params::verify_ssl,
 ) inherits kibana::params {
 
   if !is_integer($port) {
@@ -131,9 +132,15 @@ class kibana (
   validate_bool($es_preserve_host)
   validate_bool($verify_ssl)
 
+
   class { '::kibana::install': } ->
   class { '::kibana::config': } ~>
   class { '::kibana::service': }
+
+  # automagically install plugins
+  if is_hash($plugins) {
+    create_resources(kibana::plugin, $plugins)
+  }
 
   Class['kibana::install'] ~> Class['kibana::service']
 }
