@@ -41,7 +41,7 @@ class kibana::install (
     source      => "${base_url}/${filename}.tar.gz",
     destination => "${tmp_dir}/${filename}.tar.gz",
     require     => User[$user],
-    unless      => "test -e ${install_path}/${filename}/LICENSE.txt"
+    unless      => "test -e ${install_path}/${filename}/LICENSE.txt",
   }
 
   exec { 'extract_kibana':
