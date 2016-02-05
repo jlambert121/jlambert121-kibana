@@ -1,3 +1,7 @@
+20160205 - v2.4.0
+   Rename to jlambert121/kibana
+   Fixes for systemd and shield <atopian>
+   Add Amazon Linux support <Daniel Jensen>
 20151129 - v2.3.0
   Add shield parameters <Bill Schwanitz>
   Enhanced dependencies <mikemead>

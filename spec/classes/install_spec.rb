@@ -9,15 +9,14 @@ describe 'kibana::install', :type => :class do
     :osfamily => 'RedHat',
     :http_proxy => false,
     :https_proxy => false,
-    :architecture => 'amd64'
+    :architecture => 'amd64',
+    :operatingsystemmajrelease => '7'
   }
 
   context 'with defaults for all parameters' do
 
     let (:facts) {
-      default_facts.merge({
-        :operatingsystemmajrelease => '7',
-      })
+      default_facts
     }
 
     let(:pre_condition) { 'include kibana'}
@@ -42,9 +41,7 @@ describe 'kibana::install', :type => :class do
   context 'with a different install_path' do
 
     let (:facts) {
-      default_facts.merge({
-        :operatingsystemmajrelease => '7'
-      })
+      default_facts
     }
 
     let(:pre_condition) { 'class {"kibana": install_path => "/usr/local" }' }
@@ -57,9 +54,7 @@ describe 'kibana::install', :type => :class do
   context 'with a different user and group' do
 
     let (:facts) {
-      default_facts.merge({
-        :operatingsystemmajrelease => '7'
-      })
+      default_facts
     }
 
     let (:params) {
@@ -78,9 +73,7 @@ describe 'kibana::install', :type => :class do
   context 'when running on EL 7' do
 
     let (:facts) {
-      default_facts.merge({
-        :operatingsystemmajrelease => '7'
-      })
+      default_facts
     }
 
     let(:pre_condition) { 'include kibana'}
@@ -106,9 +99,7 @@ describe 'kibana::install', :type => :class do
   context 'EL 7 with a different install_path' do
 
     let (:facts) {
-      default_facts.merge({
-        :operatingsystemmajrelease => '7'
-      })
+      default_facts
     }
 
     let(:pre_condition) { 'class {"kibana": install_path => "/usr/local" }' }
@@ -170,7 +161,6 @@ describe 'kibana::install', :type => :class do
       default_facts.merge({
         :osfamily => 'Debian',
         :operatingsystem => 'Debian',
-        :operatingsystemmajrelease => '7',
       })
     }
 
@@ -206,4 +196,3 @@ describe 'kibana::install', :type => :class do
   end
 
 end
-

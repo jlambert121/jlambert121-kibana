@@ -90,10 +90,6 @@
 #     class { 'kibana': }
 #
 #
-# === Authors
-#
-# * Justin Lambert <mailto:jlambert@letsevenup.com>
-#
 class kibana (
   $version                = $::kibana::params::version,
   $base_url               = $::kibana::params::base_url,

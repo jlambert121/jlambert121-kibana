@@ -1,4 +1,4 @@
-[![Puppet Forge](http://img.shields.io/puppetforge/v/evenup/kibana.svg)](https://forge.puppetlabs.com/evenup/kibana)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/jlambert121/kibana.svg)](https://forge.puppetlabs.com/jlambert121/kibana)
 [![Build Status](https://travis-ci.org/jlambert121/jlambert121-kibana.png?branch=master)](https://travis-ci.org/jlambert121/jlambert121-kibana)
 
 #### Table of Contents
@@ -35,7 +35,7 @@ This module installs kibana 4 (https://www.elastic.co/products/kibana), commonly
 Installation of the kibana module:
 
 ```
-  puppet module install evenup-kibana
+  puppet module install jlambert121-kibana
 ```
 
 ## Usage
@@ -132,12 +132,12 @@ Default: 0
 
 ## Development
 
-Improvements and bug fixes are greatly appreciated.  See the [contributing guide](https://github.com/evenup/evenup-kibana/CONTRIBUTING.md) for
+Improvements and bug fixes are greatly appreciated.  See the [contributing guide](https://github.com/jlambert121/jlambert121-kibana/CONTRIBUTING.md) for
 information on adding and validating tests for PRs.
 
 
 ## Changelog / Contributors
 
-[Changelog](https://github.com/evenup/evenup-kibana/blob/master/CHANGELOG)
+[Changelog](https://github.com/jlambert121/jlambert121-kibana/blob/master/CHANGELOG)
 
-[Contributors](https://github.com/evenup/evenup-kibana/graphs/contributors)
+[Contributors](https://github.com/jlambert121/jlambert121-kibana/graphs/contributors)

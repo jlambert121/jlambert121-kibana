@@ -1,12 +1,12 @@
 {
-  "name": "evenup-kibana",
-  "version": "2.3.0",
-  "author": "Justin Lambert <jlambert@letsevenup.com>",
+  "name": "jlambert121-kibana",
+  "version": "2.4.0",
+  "author": "Justin Lambert <jlambert@letsjlambert121.com>",
   "license": "Apache-2.0",
   "summary": "Manages kibana",
-  "source": "https://github.com/evenup/evenup-kibana",
-  "project_page": "https://github.com/evenup/evenup-kibana",
-  "issues_url": "https://github.com/evenup/evenup-kibana/issues",
+  "source": "https://github.com/jlambert121/jlambert121-kibana",
+  "project_page": "https://github.com/jlambert121/jlambert121-kibana",
+  "issues_url": "https://github.com/jlambert121/jlambert121-kibana/issues",
   "tags": ["kibana", "elk"],
   "operatingsystem_support": [
     { "operatingsystem": "RedHat", "operatingsystemrelease": [ "6", "7" ] },

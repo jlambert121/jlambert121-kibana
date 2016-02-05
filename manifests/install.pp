@@ -3,10 +3,6 @@
 # This class installs kibana.  It should not be directly called.
 #
 #
-# === Authors
-#
-# * Justin Lambert <mailto:jlambert@letsevenup.com>
-#
 class kibana::install (
   $version             = $::kibana::version,
   $base_url            = $::kibana::base_url,

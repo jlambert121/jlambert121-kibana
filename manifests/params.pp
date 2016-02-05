@@ -3,10 +3,6 @@
 # This class sets default parameters
 #
 #
-# === Authors
-#
-# * Justin Lambert <mailto:jlambert@letsevenup.com>
-#
 class kibana::params {
   $version                = '4.0.1'
   $base_url               = 'https://download.elasticsearch.org/kibana/kibana'

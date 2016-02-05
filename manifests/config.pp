@@ -3,10 +3,6 @@
 # This class configures kibana.  It should not be directly called.
 #
 #
-# === Authors
-#
-# * Justin Lambert <mailto:jlambert@letsevenup.com>
-#
 class kibana::config (
   $version                = $::kibana::version,
   $install_path           = $::kibana::install_path,
