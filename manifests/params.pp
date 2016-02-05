@@ -30,7 +30,7 @@ class kibana::params {
   $user                   = 'kibana'
 
   case $::operatingsystem {
-    'RedHat', 'CentOS', 'Fedora', 'Scientific', 'Amazon', 'OracleLinux', 'SLC': {
+    'RedHat', 'CentOS', 'Fedora', 'Scientific', 'OracleLinux', 'SLC': {
 
       if versioncmp($::operatingsystemmajrelease, '7') >= 0 {
         $service_provider     = 'systemd'
@@ -70,6 +70,11 @@ class kibana::params {
     'OpenSuSE': {
       $service_provider  = 'systemd'
       $run_path          = '/run/kibana'
+    }
+
+    'Amazon': {
+      $service_provider  = 'init'
+      $init_script_osdependend = 'kibana.legacy.service.redhat.erb'
     }
 
     default: {
