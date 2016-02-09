@@ -68,6 +68,13 @@ class kibana::install (
     require => Exec['extract_kibana'],
   }
 
+  file { "${install_path}/kibana/installedPlugins":
+    ensure  => directory,
+    owner   => kibana,
+    group   => kibana,
+    require => User['kibana'],
+  }
+
   file { '/var/log/kibana':
     ensure  => directory,
     owner   => kibana,
