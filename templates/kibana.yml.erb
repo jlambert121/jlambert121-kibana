@@ -52,8 +52,13 @@ ca: <%= @ca_cert %>
 <%- end -%>
 
 # SSL for outgoing requests from the Kibana Server (PEM formatted)
-# ssl_key_file: /path/to/your/server.key
-# ssl_cert_file: /path/to/your/server.crt
+<%- if @ssl_key_file -%>
+ssl_key_file: <%= @ssl_key_file %>
+<%- end -%>
+
+<%- if @ssl_cert_file -%>
+ssl_cert_file: <%= @ssl_cert_file %>
+<%- end -%>
 
 # Set the path to where you would like the process id file to be created.
 pid_file: <%= @pid_file %>
