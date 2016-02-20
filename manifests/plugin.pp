@@ -6,9 +6,7 @@
 define kibana::plugin(
   $source,
   $ensure       = 'present',
-  $group        = $::kibana::group,
   $install_root = $::kibana::install_path,
-  $user         = $::kibana::user,
   $group        = $::kibana::group,
   $user         = $::kibana::user) {
 
