@@ -136,10 +136,9 @@ class kibana (
     validate_absolute_path($ssl_cert_file)
   }
 
-   if ( $ssl_key_file != undef) {
+  if ( $ssl_key_file != undef) {
     validate_absolute_path($ssl_key_file)
   }
-
 
   class { '::kibana::install': } ->
   class { '::kibana::config': } ~>
