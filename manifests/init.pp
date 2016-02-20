@@ -132,6 +132,13 @@ class kibana (
   validate_bool($es_preserve_host)
   validate_bool($verify_ssl)
 
+  if ( $ssl_cert_file != undef) {
+    validate_absolute_path($ssl_cert_file)
+  }
+
+  if ( $ssl_key_file != undef) {
+    validate_absolute_path($ssl_key_file)
+  }
 
   class { '::kibana::install': } ->
   class { '::kibana::config': } ~>
