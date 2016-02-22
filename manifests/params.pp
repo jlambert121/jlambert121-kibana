@@ -33,8 +33,9 @@ class kibana::params {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'OracleLinux', 'SLC': {
 
       if versioncmp($::operatingsystemmajrelease, '7') >= 0 {
-        $service_provider     = 'systemd'
-        $run_path             = '/run/kibana'
+        $service_provider      = 'systemd'
+        $systemd_provider_path = '/usr/lib/systemd/system'
+        $run_path              = '/run/kibana'
       } else {
         $service_provider        = 'init'
         $run_path                = '/var/run'
@@ -46,8 +47,9 @@ class kibana::params {
     'Debian': {
 
       if versioncmp($::operatingsystemmajrelease, '8') >= 0 {
-        $service_provider = 'systemd'
-        $run_path         = '/run/kibana'
+        $service_provider      = 'systemd'
+        $systemd_provider_path = '/lib/systemd/system'
+        $run_path              = '/run/kibana'
       } else {
         $service_provider        = 'init'
         $run_path                = '/var/run'
@@ -58,8 +60,9 @@ class kibana::params {
     'Ubuntu': {
 
       if versioncmp($::operatingsystemmajrelease, '15') >= 0 {
-        $service_provider = 'systemd'
-        $run_path         = '/run/kibana'
+        $service_provider      = 'systemd'
+        $systemd_provider_path = '/usr/lib/systemd/system'
+        $run_path              = '/run/kibana'
       } else {
         $service_provider        = 'init'
         $run_path                = '/var/run'
@@ -68,8 +71,9 @@ class kibana::params {
     }
 
     'OpenSuSE': {
-      $service_provider  = 'systemd'
-      $run_path          = '/run/kibana'
+      $service_provider      = 'systemd'
+      $systemd_provider_path = '/usr/lib/systemd/system'
+      $run_path              = '/run/kibana'
     }
 
     'Amazon': {

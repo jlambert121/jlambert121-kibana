@@ -98,7 +98,7 @@ class kibana::install (
 
     file { 'kibana-init-script':
       ensure  => file,
-      path    => '/usr/lib/systemd/system/kibana.service',
+      path    => "${::kibana::params::systemd_provider_path}/kibana.service",
       content => template('kibana/kibana.service.erb'),
       notify  => Class['::kibana::service'],
     }
