@@ -1,5 +1,5 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/evenup/kibana.svg)](https://forge.puppetlabs.com/evenup/kibana)
-[![Build Status](https://travis-ci.org/evenup/evenup-kibana.png?branch=master)](https://travis-ci.org/evenup/evenup-kibana)
+[![Build Status](https://travis-ci.org/jlambert121/jlambert121-kibana.png?branch=master)](https://travis-ci.org/jlambert121/jlambert121-kibana)
 
 #### Table of Contents
 

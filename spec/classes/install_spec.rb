@@ -4,6 +4,7 @@ describe 'kibana::install', :type => :class do
 
   default_facts = {
     :operatingsystem => 'CentOS',
+    :operatingsystemmajrelease => '7',
     :kernel => 'Linux',
     :osfamily => 'RedHat',
     :http_proxy => false,
