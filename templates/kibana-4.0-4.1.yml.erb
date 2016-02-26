@@ -26,12 +26,15 @@ kibana_elasticsearch_username: <%= @elasticsearch_username %>
 kibana_elasticsearch_password: <%= @elasticsearch_password %>
 <%- end -%>
 
-
 # The default application to load.
 default_app_id: "<%= @default_app_id %>"
 
 # Logs
-log_file: /var/log/kibana/kibana.log
+log_file: <%= @log_file %>
+
+# Time in milliseconds to wait for elasticsearch to respond to pings, defaults to
+# request_timeout setting
+ping_timeout: <%= @ping_timeout %>
 
 # Time in milliseconds to wait for responses from the back end or elasticsearch.
 # This must be > 0
@@ -40,6 +43,9 @@ request_timeout: <%= @request_timeout %>
 # Time in milliseconds for Elasticsearch to wait for responses from shards.
 # Set to 0 to disable.
 shard_timeout: <%= @shard_timeout %>
+
+# Time in milliseconds to wait for Elasticsearch at Kibana startup before retrying
+startup_timeout: <%= @startup_timeout %>
 
 # Set to false to have a complete disregard for the validity of the SSL
 # certificate.
