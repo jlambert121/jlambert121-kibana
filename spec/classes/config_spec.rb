@@ -8,7 +8,7 @@ describe 'kibana::config', :type => :class do
     :https_proxy => false,
   } }
 
-  let(:params) { {
+  default_params = {
     :port                   => 5601,
     :bind                   => '0.0.0.0',
     :ca_cert                => nil,
@@ -25,8 +25,45 @@ describe 'kibana::config', :type => :class do
     :ssl_key_file           => nil,
     :verify_ssl             => true,
     :install_path           => '/opt'
-  } }
+  }
 
-  it { should contain_file('/opt/kibana/config/kibana.yml') }
+  context 'with version 4.1 or lower' do
+
+    let(:params) {
+      default_params.merge({
+        :version  => '4.1.5'
+      })
+    }
+
+    it { should contain_file('/opt/kibana/config/kibana.yml').with_content(/^port:/) }
+
+  end
+
+  context 'with version 4.2' do
+
+    let(:params) {
+      default_params.merge({
+        :version  => '4.2.0'
+      })
+    }
+
+    it { should contain_file('/opt/kibana/config/kibana.yml').with_content(/^server\.port:/) }
+    it { should contain_file('/opt/kibana/config/kibana.yml').without_content(/^port:/)}
+
+  end
+
+  context 'with version 4.1 and a basePath which is supported since 4.2' do
+
+    let(:params) {
+      default_params.merge({
+        :version   => '4.1.5',
+        :base_path => '/kibana'
+      })
+    }
+
+    it { should compile.and_raise_error(/Kibana config: server.basePath is not supported for kibana 4.1 and lower/) }
+
+  end
+
 
 end

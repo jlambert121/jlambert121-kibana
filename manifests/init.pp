@@ -112,9 +112,13 @@ class kibana (
   $plugins                = $::kibana::params::plugins,
   $request_timeout        = $::kibana::params::request_timeout,
   $shard_timeout          = $::kibana::params::shard_timeout,
+  $ping_timeout           = $::kibana::params::ping_timeout,
+  $startup_timeout        = $::kibana::params::startup_timeout,
   $ssl_cert_file          = $::kibana::params::ssl_cert_file,
   $ssl_key_file           = $::kibana::params::ssl_key_file,
   $verify_ssl             = $::kibana::params::verify_ssl,
+  $base_path              = $::kibana::params::base_path,
+  $log_file               = $::kibana::params::log_file,
 ) inherits kibana::params {
 
   if !is_integer($port) {

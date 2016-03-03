@@ -23,11 +23,15 @@ class kibana::params {
   $default_app_id         = 'discover'
   $request_timeout        = 300000
   $shard_timeout          = 0
+  $ping_timeout           = 1500
+  $startup_timeout        = 5000
   $ssl_cert_file          = undef
   $ssl_key_file           = undef
   $verify_ssl             = true
   $group                  = 'kibana'
   $user                   = 'kibana'
+  $base_path              = undef
+  $log_file               = '/var/log/kibana/kibana.log'
 
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'OracleLinux', 'SLC': {
