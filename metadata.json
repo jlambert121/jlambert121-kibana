@@ -13,7 +13,7 @@
     { "operatingsystem": "CentOS", "operatingsystemrelease": [ "6", "7" ] }
   ],
   "dependencies": [
-    { "name": "maestrodev/wget", "version_requirements": ">=1.5.7 <2.0.0" },
+    { "name": "maestrodev/wget", "version_requirements": ">=1.7.2 <2.0.0" },
     { "name": "puppetlabs/stdlib", "version_requirement": ">=3.2.0 <5.0.0" }
   ]
 }
