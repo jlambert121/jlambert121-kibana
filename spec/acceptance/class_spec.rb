@@ -35,7 +35,5 @@ describe 'kibana classes' do
     describe port(5601) do
       it { should be_listening.with('tcp') }
     end
-
   end # install/config
-
 end
