@@ -78,7 +78,7 @@ class kibana::install (
     require => User['kibana'],
   }
 
-  if $service_provider == 'init' {
+  if $service_provider == 'init' or $service_provider == undef {
 
     file { 'kibana-init-script':
       ensure  => file,
