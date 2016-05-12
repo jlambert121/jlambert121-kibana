@@ -84,6 +84,10 @@
 #   Boolean.
 #   Default: true
 #
+# [*package_source*]
+#   String. Install from tarball or RPM
+#   Default: tar
+#
 # === Examples
 #
 # * Installation:
@@ -115,6 +119,7 @@ class kibana (
   $verify_ssl             = $::kibana::params::verify_ssl,
   $base_path              = $::kibana::params::base_path,
   $log_file               = $::kibana::params::log_file,
+  $package_source         = $::kibana::params::package_source,
 ) inherits kibana::params {
 
   if !is_integer($port) {
@@ -140,7 +145,11 @@ class kibana (
     validate_absolute_path($ssl_key_file)
   }
 
-  class { '::kibana::install': } ->
+  validate_re('^tar|rpm$', $package_source)
+
+  class { '::kibana::install':
+    package_source  => $package_source,
+  } ->
   class { '::kibana::config': } ~>
   class { '::kibana::service': }
 
