@@ -4,6 +4,7 @@
 #
 #
 class kibana::install (
+  $package_source      = $::kibana::package_source,
   $version             = $::kibana::version,
   $base_url            = $::kibana::base_url,
   $tmp_dir             = $::kibana::tmp_dir,
@@ -11,11 +12,6 @@ class kibana::install (
   $group               = $::kibana::group,
   $user                = $::kibana::user,
 ) {
-
-  $filename = $::architecture ? {
-    /(i386|x86$)/    => "kibana-${version}-linux-x86",
-    /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
-  }
 
   $service_provider = $::kibana::params::service_provider
   $run_path         = $::kibana::params::run_path
@@ -33,53 +29,59 @@ class kibana::install (
     require => Group[$group],
   }
 
-  wget::fetch { 'kibana':
-    source      => "${base_url}/${filename}.tar.gz",
-    destination => "${tmp_dir}/${filename}.tar.gz",
-    require     => User[$user],
-    unless      => "test -e ${install_path}/${filename}/LICENSE.txt",
-  }
+  if $package_source == 'tar' {
+    $filename = $::architecture ? {
+      /(i386|x86$)/    => "kibana-${version}-linux-x86",
+      /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
+    }
 
-  exec { 'extract_kibana':
-    command => "tar -xzf ${tmp_dir}/${filename}.tar.gz -C ${install_path}",
-    path    => ['/bin', '/sbin'],
-    creates => "${install_path}/${filename}",
-    notify  => Exec['ensure_correct_permissions'],
-    require => Wget::Fetch['kibana'],
-  }
+    wget::fetch { 'kibana':
+      source      => "${base_url}/${filename}.tar.gz",
+      destination => "${tmp_dir}/${filename}.tar.gz",
+      require     => User[$user],
+      unless      => "test -e ${install_path}/${filename}/LICENSE.txt",
+    }
 
-  exec { 'ensure_correct_permissions':
-    command     => "chown -R ${user}:${group} ${install_path}/${filename}",
-    path        => ['/bin', '/sbin'],
-    refreshonly => true,
-    require     => [
-        Exec['extract_kibana'],
-        User[$user],
-    ],
-  }
+    exec { 'extract_kibana':
+      command => "tar -xzf ${tmp_dir}/${filename}.tar.gz -C ${install_path}",
+      path    => ['/bin', '/sbin'],
+      creates => "${install_path}/${filename}",
+      notify  => Exec['ensure_correct_permissions'],
+      require => Wget::Fetch['kibana'],
+    }
 
-  file { "${install_path}/kibana":
-    ensure  => 'link',
-    target  => "${install_path}/${filename}",
-    require => Exec['extract_kibana'],
-  }
+    exec { 'ensure_correct_permissions':
+      command     => "chown -R ${user}:${group} ${install_path}/${filename}",
+      path        => ['/bin', '/sbin'],
+      refreshonly => true,
+      require     => [
+          Exec['extract_kibana'],
+          User[$user],
+      ],
+    }
 
-  file { "${install_path}/kibana/installedPlugins":
-    ensure  => directory,
-    owner   => kibana,
-    group   => kibana,
-    require => User['kibana'],
-  }
+    file { "${install_path}/kibana":
+      ensure  => 'link',
+      target  => "${install_path}/${filename}",
+      require => Exec['extract_kibana'],
+    }
 
-  file { '/var/log/kibana':
-    ensure  => directory,
-    owner   => kibana,
-    group   => kibana,
-    require => User['kibana'],
+    file { "${install_path}/kibana/installedPlugins":
+      ensure  => directory,
+      owner   => kibana,
+      group   => kibana,
+      require => User['kibana'],
+    }
+
+  } elsif $package_source == 'rpm' {
+    ensure_packages(['kibana'])
+
+    Package['kibana'] -> User[$user]
+    Package['kibana'] -> Group[$group]
+    Package['kibana'] -> File['kibana-init-script']
   }
 
   if $service_provider == 'init' {
-
     file { 'kibana-init-script':
       ensure  => file,
       path    => '/etc/init.d/kibana',
@@ -87,11 +89,9 @@ class kibana::install (
       mode    => '0755',
       notify  => Class['::kibana::service'],
     }
-
   }
 
   if $service_provider == 'systemd' {
-
     file { 'kibana-init-script':
       ensure  => file,
       path    => "${::kibana::params::systemd_provider_path}/kibana.service",
@@ -116,4 +116,10 @@ class kibana::install (
     }
   }
 
+  file { '/var/log/kibana':
+    ensure  => directory,
+    owner   => kibana,
+    group   => kibana,
+    require => User['kibana'],
+  }
 }

@@ -28,6 +28,7 @@ class kibana::params {
   $user                   = 'kibana'
   $base_path              = undef
   $log_file               = '/var/log/kibana/kibana.log'
+  $package_source         = 'tar'
 
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'OracleLinux', 'SLC': {
