@@ -31,7 +31,7 @@ define kibana::plugin(
   case $ensure {
     'installed', 'present': {
       $name_file_path = "${plugins_dir}/${base_module_name}/.name"
-      exec {"install_plugin_${name}":
+      exec {"install_plugin_${base_module_name}":
         command => $install_cmd,
         creates => $name_file_path,
         notify  => Service['kibana'],
