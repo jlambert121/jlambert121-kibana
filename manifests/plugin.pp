@@ -40,7 +40,7 @@ define kibana::plugin(
       file {$name_file_path:
         ensure  => file,
         content => $base_module_name,
-        require => Exec["install_plugin_${base_module_name}"],
+        require => Exec["install_plugin_${name}"],
       }
     }
     'absent': {
