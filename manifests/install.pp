@@ -11,11 +11,20 @@ class kibana::install (
   $group               = $::kibana::group,
   $user                = $::kibana::user,
 ) {
-
-  $filename = $::architecture ? {
-    /(i386|x86$)/    => "kibana-${version}-linux-x86",
-    /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
+  if $version >= '4.6' {
+    $filename = $::architecture ? {
+      /(i386|x86$)/    => "kibana-${version}-linux-x86",
+      /(amd64|x86_64)/ => "kibana-${version}-linux-x86_x64",
+    }
   }
+  else {
+    $filename = $::architecture ? {
+      /(i386|x86$)/    => "kibana-${version}-linux-x86",
+      /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
+  }
+  }
+  }
+  
 
   $service_provider = $::kibana::params::service_provider
   $run_path         = $::kibana::params::run_path
