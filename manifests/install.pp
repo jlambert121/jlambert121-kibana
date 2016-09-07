@@ -11,7 +11,7 @@ class kibana::install (
   $group               = $::kibana::group,
   $user                = $::kibana::user,
 ) {
-  if $version >= '4.6' {
+  if $version >= 4.6 {
     $filename = $::architecture ? {
       /(i386|x86$)/    => "kibana-${version}-linux-x86",
       /(amd64|x86_64)/ => "kibana-${version}-linux-x86_x64",
