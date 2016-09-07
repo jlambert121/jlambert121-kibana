@@ -23,7 +23,7 @@ class kibana::install (
       /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
   }
   }
-  }
+  
   
 
   $service_provider = $::kibana::params::service_provider
