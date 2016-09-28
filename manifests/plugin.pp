@@ -39,10 +39,10 @@ define kibana::plugin(
       $name_file_path = "${plugins_dir}/${base_module_name}/.name"
       exec {"install_plugin_${base_module_name}":
         command => $install_cmd,
-        creates => $name_file_path,
+        creates => ${plugins_dir}/${base_module_name},
         notify  => Service['kibana'],
         require => File[$plugins_dir],
-      }
+      } ->
       file {$name_file_path:
         ensure  => file,
         content => $base_module_name,
