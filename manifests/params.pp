@@ -38,7 +38,7 @@ class kibana::params {
         $run_path              = '/run/kibana'
       } else {
         $service_provider        = 'init'
-        $run_path                = '/var/run'
+        $run_path                = '/var/run/kibana'
         $init_script_osdependend = 'kibana.legacy.service.redhat.erb'
       }
 
@@ -52,7 +52,7 @@ class kibana::params {
         $run_path              = '/run/kibana'
       } else {
         $service_provider        = 'init'
-        $run_path                = '/var/run'
+        $run_path                = '/var/run/kibana'
         $init_script_osdependend = 'kibana.legacy.service.debian.erb'
       }
     }
@@ -65,7 +65,7 @@ class kibana::params {
         $run_path              = '/run/kibana'
       } else {
         $service_provider        = 'init'
-        $run_path                = '/var/run'
+        $run_path                = '/var/run/kibana'
         $init_script_osdependend = 'kibana.legacy.service.debian.erb'
       }
     }
@@ -83,7 +83,7 @@ class kibana::params {
 
     default: {
       $service_provider        = 'init'
-      $run_path                = '/var/run'
+      $run_path                = '/var/run/kibana'
       $init_script_osdependend = 'kibana.legacy.service.redhat.erb'
     }
   }

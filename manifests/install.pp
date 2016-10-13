@@ -78,6 +78,14 @@ class kibana::install (
     require => User['kibana'],
   }
 
+  file { 'kibana-run-dir':
+    ensure => directory,
+    path   => $run_path,
+    owner  => $user,
+    group  => $group,
+    notify => Class['::kibana::service'],
+  }
+
   if $service_provider == 'init' {
 
     file { 'kibana-init-script':
@@ -97,14 +105,6 @@ class kibana::install (
       path    => "${::kibana::params::systemd_provider_path}/kibana.service",
       content => template('kibana/kibana.service.erb'),
       notify  => Class['::kibana::service'],
-    }
-
-    file { 'kibana-run-dir':
-      ensure => directory,
-      path   => $run_path,
-      owner  => $user,
-      group  => $group,
-      notify => Class['::kibana::service'],
     }
 
     file { 'kibana-tmpdir-d-conf':
