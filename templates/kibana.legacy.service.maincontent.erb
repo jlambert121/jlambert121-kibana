@@ -3,7 +3,8 @@ if [ "x$KIBANA_HOME" = "x" ]; then
 fi
 
 DAEMON=$KIBANA_HOME/bin/$NAME
-PIDFILE=/var/run/$NAME.pid
+RUNDIR=<%= @run_path %>
+PIDFILE=$RUNDIR/$NAME.pid
 
 
 if [ "x$LOG" = "x" ]; then
@@ -18,75 +19,68 @@ if [ "x$SCRIPTNAME" = "x" ]; then
     SCRIPTNAME="/etc/init.d/$NAME"
 fi
 
-
-pid_file_exists() {
-    [ -f "$PIDFILE" ]
+check_status() {
+        start-stop-daemon --stop --signal 0 --pidfile ${PIDFILE}
 }
 
 do_start()      {
-
-        if pid_file_exists
+        if check_status > /dev/null
         then
-            echo "Kibana is already running"
+                PID=$(cat $PIDFILE)
+                echo "${NAME} already running with PID ${PID}"
+                exit 1
+        fi
+
+        echo -n "starting ${NAME}: "
+
+        # Ensure that $RUNDIR exists
+        [ -d $RUNDIR ] || ( mkdir -p $RUNDIR && chown kibana:kibana $RUNDIR )
+
+        if start-stop-daemon --start --background --umask 007 --pidfile $PIDFILE --chuid kibana:kibana --exec $DAEMON -- $DAEMON_ARGS
+        then
+                sleep 5
+                if ! [ -f $PIDFILE ]
+                then
+                        echo "failed to start ${NAME}"
+                        exit 1
+                fi
+                PID=$(cat $PIDFILE)
+                echo "${NAME} running with ${PID}"
         else
-            $DAEMON $DAEMON_ARGS 1>"$LOG" 2>&1 &
-            echo $! > "$PIDFILE"
-            PID=$!
-            if [ "$PID" > 0 ]
-            then
-                echo "Kibana started with pid $!"
-            else
-                echo "Kibana could not be started"
-            fi
+                echo "failed to start ${NAME}"
+                exit 1
         fi
 }
 
-
 do_status() {
-        if pid_file_exists
-        then
-            PID=$(cat $PIDFILE)
-            STATUS=$(ps ax | grep $PID | grep -v grep | awk '{print $1}')
+        echo -n "${NAME} status: "
 
-            if [ "$STATUS" = "$PID" ]
-            then
-                echo "Kibana is running on proccess $PID"
-                result=0
-            else
-                echo "Kibana is NOT running"
-                rm $PIDFILE
-                result=1
-            fi
+        if check_status
+        then
+                PID=$(cat $PIDFILE)
+                echo "running with ${PID}"
         else
-            echo "Kibana is NOT running"
-            result=1
+                exit 1
         fi
-        return $result
 }
 
 do_stop() {
-        if pid_file_exists
+        if ! check_status > /dev/null
         then
-            PID=$(cat $PIDFILE)
-            STATUS=$(ps ax | grep $PID | grep -v grep | awk '{print $1}')
+                echo "${NAME} not running"
+                exit 1
+        fi
 
-            if [ "$STATUS" = "$PID" ]
-            then
-                echo "Killing Kibana...."
-                KILL=$(kill -15 $PID)
-                rm $PIDFILE
-                sleep 1
-                echo -e "\tKibana (PID:$PID) killed"
+        echo -n "Stopping ${NAME}: "
 
-            else
-                echo "Kibana is NOT running"
+        if start-stop-daemon --stop --retry forever/TERM/1 --quiet --pidfile $PIDFILE
+        then
+                echo "done"
                 rm $PIDFILE
-            fi
         else
-                echo "Kibana is NOT running"
+                echo "failed"
         fi
 }
-
 
 case "$1" in
   start)
