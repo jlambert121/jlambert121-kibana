@@ -11,13 +11,15 @@ class kibana::install (
   $group               = $::kibana::group,
   $user                = $::kibana::user,
 ) {
+  if versioncmp($version, '4.6.0') < 0 {
+    $arch_string = 'x64'
+  } else {
+    $arch_string = 'x86_64'
+  }
 
   $filename = $::architecture ? {
     /(i386|x86$)/    => "kibana-${version}-linux-x86",
-    /(amd64|x86_64)/ => versioncmp($version, '4.6.0') ? {
-      /(1|0)/ => "kibana-${version}-linux-x86_64",
-      default => "kibana-${version}-linux-x64",
-    },
+    /(amd64|x86_64)/ => "kibana-${version}-linux-${arch_string}",
   }
 
   $service_provider = $::kibana::params::service_provider
