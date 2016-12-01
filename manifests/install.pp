@@ -92,6 +92,13 @@ class kibana::install (
 
   if $service_provider == 'systemd' {
 
+    file { '/usr/lib/systemd/system':
+      ensure  => directory,
+      owner   => root,
+      group   => root,
+      mode    => '0755',
+    }
+    ->
     file { 'kibana-init-script':
       ensure  => file,
       path    => "${::kibana::params::systemd_provider_path}/kibana.service",
