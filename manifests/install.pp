@@ -23,8 +23,8 @@ class kibana::install (
       /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
   }
   }
-  
-  
+
+
 
   $service_provider = $::kibana::params::service_provider
   $run_path         = $::kibana::params::run_path
@@ -87,7 +87,7 @@ class kibana::install (
     require => User['kibana'],
   }
 
-  if $service_provider == 'init' {
+  if ($service_provider == 'init') or ($service_provider == undef) {
 
     file { 'kibana-init-script':
       ensure  => file,
