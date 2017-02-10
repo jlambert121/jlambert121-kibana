@@ -10,11 +10,12 @@ class kibana::install (
   $install_path        = $::kibana::install_path,
   $group               = $::kibana::group,
   $user                = $::kibana::user,
+  $arch_suffix_64bit   = 'x64',
 ) {
 
   $filename = $::architecture ? {
     /(i386|x86$)/    => "kibana-${version}-linux-x86",
-    /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
+    /(amd64|x86_64)/ => "kibana-${version}-linux-${arch_suffix_64bit}",
   }
 
   $service_provider = $::kibana::params::service_provider
@@ -91,6 +92,10 @@ class kibana::install (
   }
 
   if $service_provider == 'systemd' {
+
+    file { "${::kibana::params::systemd_provider_path}":
+      ensure => directory,
+    }
 
     file { 'kibana-init-script':
       ensure  => file,
