@@ -10,11 +10,12 @@ class kibana::install (
   $install_path        = $::kibana::install_path,
   $group               = $::kibana::group,
   $user                = $::kibana::user,
+  $arch_suffix_64bit   = 'x64',
 ) {
 
   $filename = $::architecture ? {
     /(i386|x86$)/    => "kibana-${version}-linux-x86",
-    /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
+    /(amd64|x86_64)/ => "kibana-${version}-linux-${arch_suffix_64bit}",
   }
 
   $service_provider = $::kibana::params::service_provider
