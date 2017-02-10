@@ -93,6 +93,10 @@ class kibana::install (
 
   if $service_provider == 'systemd' {
 
+    file { "${::kibana::params::systemd_provider_path}":
+      ensure => directory,
+    }
+
     file { 'kibana-init-script':
       ensure  => file,
       path    => "${::kibana::params::systemd_provider_path}/kibana.service",
