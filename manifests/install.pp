@@ -78,7 +78,7 @@ class kibana::install (
     require => User['kibana'],
   }
 
-  if $service_provider == 'init' {
+  if grep(['init', 'redhat', 'debian'], $service_provider) {
 
     file { 'kibana-init-script':
       ensure  => file,
